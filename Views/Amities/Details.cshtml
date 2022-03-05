@@ -1,0 +1,29 @@
+﻿@model NetAtlas.Models.Amitie
+
+@{
+    ViewData["title"] = "Confirmer acceptatioon";
+}
+
+
+<div>
+    <h4>Confirmation d'acceptation</h4>
+    <hr />
+    <h5>Voulez vous vraiment accepter cette invitation?</h5>
+    <dl class="row">
+       
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Receiver)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Receiver.Email)
+        </dd>
+        
+    </dl>
+</div>
+<div>
+    <form asp-action="Edit">
+            <input type="hidden" asp-for="Id" />
+            <input type="submit" value="accepter l'invitation" />
+    </form>
+
+</div>

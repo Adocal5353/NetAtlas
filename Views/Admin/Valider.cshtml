@@ -1,0 +1,37 @@
+﻿@model NetAtlas.Models.Membre
+
+@{
+    Layout = "_LayoutAdmin";
+    ViewData["Title"] = "Autorisation";
+}
+
+<h1 class="text-success">Cette demande a été valider avec succès</h1>
+
+<div>
+    <h4>Cliquer sur valider pour autoriser cette inscription</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Nom)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Nom)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Prenom)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Prenom)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Email)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Email)
+        </dd>
+        
+    </dl>
+</div>
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
