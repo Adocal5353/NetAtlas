@@ -1,0 +1,44 @@
+﻿@model NetAtlas.Models.Lien
+
+@{
+    ViewData["title"] = "Suppression de publication";
+}
+
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>Lien</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Url)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Url)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Publication)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Publication.Id)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.nomRessource)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.nomRessource)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Type)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Type)
+        </dd>
+    </dl>
+    
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="Id" />
+        <input type="submit" value="Delete" class="btn btn-danger" /> |
+        <a asp-action="Index">Back to List</a>
+    </form>
+</div>

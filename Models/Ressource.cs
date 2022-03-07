@@ -13,6 +13,6 @@ namespace NetAtlas.Models
         public string nomRessource { get; set; }
 
         //if it is a message type=0, a link type = 1, an image type=2 and a video type=3
-        public int Type { get; set; }
+        public int? Type { get; set; }
     }
 }

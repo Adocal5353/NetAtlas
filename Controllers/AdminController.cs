@@ -95,7 +95,24 @@ namespace NetAtlas.Controllers
             return View(await BaseDeDonnee.Membre.Where(m=>m.NbrAvertissement>=3).ToListAsync());
         }
 
+        public async Task<IActionResult> DeleteMember(int id)
+        {
+            var member = await BaseDeDonnee.Membre.FindAsync(id);
+            if( member is null)
+            {
+                return NotFound();
+            }
+            else
+            {
+                 BaseDeDonnee.Remove(member);
+                await BaseDeDonnee.SaveChangesAsync();
+                return View();
+
+            }
+        }
+
         
     }
+
     
 }
