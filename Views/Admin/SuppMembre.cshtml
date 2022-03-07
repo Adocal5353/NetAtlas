@@ -1,4 +1,4 @@
-﻿@model NetAtlas.Models.Register
+﻿@model NetAtlas.Models.Membre
 
 @{
     Layout = "_LayoutAdmin";
@@ -6,7 +6,7 @@
 }
 
 
-<h3>Cliquer sur refuser pour rejeter cette demande d'inscription</h3>
+<h3>Cliquer sur supprimer pour supprimer le compte de cet utilisateur</h3>
 <div>
     <hr />
     <dl class="row">
@@ -31,14 +31,9 @@
 
     </dl>
 
-    <div>
-        <a asp-action="Refuser" asp-route-id="@Model?.Id" class="btn btn-primary">Valider</a> |
-        <a asp-action="Index">Back to List</a>
-    </div>
-
-    @*<form asp-action="Rejeter">
+    <form asp-action="SuppMembre">
             <input type="hidden" asp-for="Id" />
-            <input type="submit" value="Refuser" class="btn btn-danger" /> |
+            <input type="submit" value="Supprimer" class="btn btn-danger" /> |
             <a asp-action="Index">Back to List</a>
-        </form>*@
+        </form>
 </div>

@@ -1,0 +1,32 @@
+﻿
+
+@{
+    Layout = "_LayoutAdmin";
+    ViewData["Title"] = "Suppression";
+}
+
+<html>
+        <body onload="redirection()">
+
+        <h1 class="text-success">Cette demande a été acceptée avec succès</h1>
+        
+        
+        <div>
+            <a asp-action="Index">Back to List</a>
+        </div>
+
+        <script>
+            function f()
+            {
+                window.location.replace("../MembresAverti");
+            }
+
+            function redirection()
+            {
+                setTimeout(f,3000);
+            }
+
+    
+        </script>
+    </body>
+</html>

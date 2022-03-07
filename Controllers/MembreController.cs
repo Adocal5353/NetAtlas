@@ -125,13 +125,13 @@ namespace NetAtlas.Controllers
                     }
                     else
                     {
-                        ViewBag.NoneValid = "Email ou mot de passe incerrect";
+                        ViewBag.NoneValid = "Email ou mot de passe incorrect";
 
                     }
                 }
 
             }
-            ViewBag.NoneValid = "Email ou mot de passe incerrect";
+            ViewBag.NoneValid = "Email ou mot de passe incorrect";
 
             return View();
         }
