@@ -59,7 +59,15 @@ namespace NetAtlas.Controllers
                 BaseDeDonnee.Remove(register);
                 await BaseDeDonnee.SaveChangesAsync();
 
-                //EnvoiMessValidation(menber.Email);
+                try
+                {
+                    EnvoiMessValidation(menber.Email);
+                    ViewBag.checkEnvoi = true;
+                }
+                catch (Exception ex)
+                {
+                    ViewBag.checkEnvoi = false;
+                }
             }
 
 
@@ -92,7 +100,16 @@ namespace NetAtlas.Controllers
             {
                 return NotFound();
             }
-           //EnvoiMessRefuser(register.Email);
+            try
+            {
+                EnvoiMessRefuser(register.Email);
+                ViewBag.checkEnvoi = true;
+            }
+            catch (Exception ex)
+            {
+                ViewBag.checkEnvoi = false;
+            }
+           
            BaseDeDonnee.Remove(register);
            await BaseDeDonnee.SaveChangesAsync();
            return View(register);
@@ -106,11 +123,18 @@ namespace NetAtlas.Controllers
         {
             string body="<h1>Demande d'inscription à Netatlas</h1> <p style='color:green;'> Votre demande d'inscription à NetAtlas a été approuvé.<br/>Connectez-vous";
 
-            MailMessage mail= new MailMessage("", adr,"Demande acceptée",body);
-            SmtpClient client= new SmtpClient("smtp.gmail.com");
-            client.Port = 587;
+             MailMessage mail = new MailMessage();
+            
+            mail.Priority = MailPriority.High;
+            mail.IsBodyHtml = true;
+            mail.Body = body;
+            mail.Subject = "Demande d'inscription approuvée";
+            mail.From = new MailAddress("netatlas2022@gmail.com");
+            mail.To.Add(new MailAddress(adr));
+
+            SmtpClient client = new SmtpClient("smtp.gmail.com",587);
             client.EnableSsl = true;
-            client.Credentials=new System.Net.NetworkCredential("", "");
+            client.Credentials = new System.Net.NetworkCredential("netatlas2022@gmail.com", "Qsdf#2022");
             client.Send(mail);
 
         }
@@ -126,12 +150,12 @@ namespace NetAtlas.Controllers
             mail.IsBodyHtml = true;
             mail.Body = body;
             mail.Subject = "Demande d'inscription rejetée";
-            mail.From = new MailAddress("markonolitse@gmail.com");
+            mail.From = new MailAddress("netatlas2022@gmail.com");
             mail.To.Add(new MailAddress(adr));
 
             SmtpClient client = new SmtpClient("smtp.gmail.com",587);
             client.EnableSsl = true;
-            client.Credentials = new System.Net.NetworkCredential("markonolitse@gmail.com", "");
+            client.Credentials = new System.Net.NetworkCredential("netatlas2022@gmail.com", "Qsdf#2022");
             client.Send(mail);
 
         }

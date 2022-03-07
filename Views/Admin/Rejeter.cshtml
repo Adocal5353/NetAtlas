@@ -2,7 +2,7 @@
 
 @{
     Layout = "_LayoutAdmin";
-    ViewData["Title"] = "Delete";
+    ViewData["Title"] = "Rejet";
 }
 
 
@@ -32,13 +32,7 @@
     </dl>
 
     <div>
-        <a asp-action="Refuser" asp-route-id="@Model?.Id" class="btn btn-primary">Valider</a> |
+        <a asp-action="Refuser" asp-route-id="@Model?.Id" class="btn btn-danger">Refuser</a> |
         <a asp-action="Index">Back to List</a>
     </div>
-
-    @*<form asp-action="Rejeter">
-            <input type="hidden" asp-for="Id" />
-            <input type="submit" value="Refuser" class="btn btn-danger" /> |
-            <a asp-action="Index">Back to List</a>
-        </form>*@
 </div>
