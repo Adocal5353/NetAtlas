@@ -35,7 +35,7 @@ namespace NetAtlas.Controllers
                 return Unauthorized();
             }
             var user = GetMembre();
-            var netAtlasContext = _context.Amitie.Include(a => a.Receiver).Where(a=>a.IdSender==user.Id && a.Statut==0);
+            var netAtlasContext = _context.Amitie.Include(a => a.Sender).Where(a=>a.IdReceiver==user.Id && a.Statut==0);
             return View(await netAtlasContext.ToListAsync());
         }
 
