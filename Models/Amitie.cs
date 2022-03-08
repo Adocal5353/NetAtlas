@@ -7,6 +7,9 @@ namespace NetAtlas.Models
     {
         [Key]
         public int Id { get; set; }
+        public virtual Membre Sender { get; set; }
+
+        [ForeignKey("Sender")]
         public int IdSender { get; set; }
 
         public virtual Membre Receiver { get; set; }

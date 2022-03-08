@@ -148,30 +148,38 @@ namespace NetAtlas.Controllers
                 List<Membre> nonAmi = new List<Membre>();
 
                 var user = GetMembre();
-                
-                var q = await bd.Membre.Where(m=>m.Id!=user.Id).ToListAsync();
-                //var q2 = await bd.Amitie.Where(a=>a.Statut==1 && (a.IdSender==user.Id || a.IdReceiver==user.Id)).ToListAsync();
-                var q2= bd.Amitie.Include(a => a.Receiver).Where(a => (a.IdSender == user.Id || a.IdReceiver == user.Id) && a.Statut == 1);
-                //var q2 = bd.Membre.J
-                if (q2 is not null)
+
+                var q = await bd.Membre.Where(m => m.Id != user.Id).ToListAsync();
+                var q2= bd.Amitie.Include(a => a.Receiver).Where(a => a.IdSender == user.Id);
+                var q3 = bd.Amitie.Include(a => a.Sender).Where(a => a.IdReceiver == user.Id);
+
+                if (q2 != null || q3 != null)
                 {
 
-                    foreach (var item in q)
+
+                    
+                    
+                    foreach(var item2 in q2)
                     {
-                        foreach (var item2 in q2)
-                        {
-                            if(item2.Receiver!=item)
-                            {
-                                nonAmi.Add(item);
-                            }
-                        }
+
+
+                        q.Remove(item2.Receiver);
+
+                    }
+                    foreach (var item2 in q3)
+                    {
+
+
+                        q.Remove(item2.Sender);
+
                     }
 
-                    return View(nonAmi);
+
+                    return View( q);
                 }
                 else 
                 {
-                    return View();
+                    return View(q);
                 }
                 
                 

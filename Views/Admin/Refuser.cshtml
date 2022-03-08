@@ -9,6 +9,21 @@
         <body onload="redirection()">
 
         <h1 class="text-danger">Cette demande a été refuser avec succès</h1>
+        @if (ViewBag.checkEnvoi){
+            <div class="alert alert-success alert-dismissible col-3" role="alert" style="margin-right:0px;margin-top:0px">
+              <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span></button>
+              L' email a bien été envoyé
+            </div>
+        }
+        else
+        {
+            <div class="alert alert-warning alert-dismissible col-3" role="alert" style="margin-right:0px;margin-top:0px">
+              <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span></button>
+              L' email n' a pas pu être envoyé
+            </div>
+        }
 
         <div >
             <hr />
@@ -37,7 +52,6 @@
         <div>
             <a asp-action="Index">Back to List</a>
         </div>
-
         <script>
             function f()
             {
@@ -46,7 +60,7 @@
 
             function redirection()
             {
-                setTimeout(f,3000);
+                setTimeout(f,8000);
             }
 
     

@@ -2,6 +2,7 @@
 
 @{
     ViewData["title"] = "Liste de vos amis";
+    Layout = "_LayoutMembre";
 }
 
 <p>
@@ -12,7 +13,7 @@
         <tr>
            
             <th colspan=2>
-                @Html.DisplayNameFor(model => model.Receiver)
+                @Html.DisplayNameFor(model => model.Sender)
             </th>
             
             <th></th>
@@ -23,11 +24,11 @@
         <tr>
            
             <td>
-                @Html.DisplayFor(modelItem => item.Receiver.Nom)
+                @Html.DisplayFor(modelItem => item.Sender.Nom)
             </td>
 
              <td>
-                @Html.DisplayFor(modelItem => item.Receiver.Prenom)
+                @Html.DisplayFor(modelItem => item.Sender.Prenom)
             </td>
            
             <td>

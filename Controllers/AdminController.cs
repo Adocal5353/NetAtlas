@@ -59,7 +59,16 @@ namespace NetAtlas.Controllers
                 BaseDeDonnee.Remove(register);
                 await BaseDeDonnee.SaveChangesAsync();
 
-                //EnvoiMessValidation(menber.Email);
+                try
+                {
+                    string body = "<h1>Demande d'inscription à Netatlas</h1> <p style='color:green;'> Votre demande d'inscription à NetAtlas a été approuvé.<br/>Connectez-vous";
+                    EnvoiMail(menber.Email,body, "Demande d'inscription approuvée");
+                    ViewBag.checkEnvoi = true;
+                }
+                catch (Exception ex)
+                {
+                    ViewBag.checkEnvoi = false;
+                }
             }
 
 
@@ -92,7 +101,17 @@ namespace NetAtlas.Controllers
             {
                 return NotFound();
             }
-           //EnvoiMessRefuser(register.Email);
+            try
+            {
+                string body = "<h1>Demande d'inscription à Netatlas</h1> <p style='color:red;'> Votre demande d'inscription à NetAtlas a été rejeter.<br/>C'est la vie";
+                EnvoiMail(register.Email, body, "Demande d'inscription rejetée") ;
+                ViewBag.checkEnvoi = true;
+            }
+            catch (Exception ex)
+            {
+                ViewBag.checkEnvoi = false;
+            }
+           
            BaseDeDonnee.Remove(register);
            await BaseDeDonnee.SaveChangesAsync();
            return View(register);
@@ -102,36 +121,22 @@ namespace NetAtlas.Controllers
 
 
 
-        private void EnvoiMessValidation(string adr)
+        private void EnvoiMail(string adr,string body,string subject)
         {
-            string body="<h1>Demande d'inscription à Netatlas</h1> <p style='color:green;'> Votre demande d'inscription à NetAtlas a été approuvé.<br/>Connectez-vous";
+            
 
-            MailMessage mail= new MailMessage("", adr,"Demande acceptée",body);
-            SmtpClient client= new SmtpClient("smtp.gmail.com");
-            client.Port = 587;
-            client.EnableSsl = true;
-            client.Credentials=new System.Net.NetworkCredential("", "");
-            client.Send(mail);
-
-        }
-
-
-        private void EnvoiMessRefuser(string adr)
-        {
-            string body = "<h1>Demande d'inscription à Netatlas</h1> <p style='color:red;'> Votre demande d'inscription à NetAtlas a été rejeter.<br/>C'est la vie";
-
-            MailMessage mail = new MailMessage();
+             MailMessage mail = new MailMessage();
             
             mail.Priority = MailPriority.High;
             mail.IsBodyHtml = true;
             mail.Body = body;
-            mail.Subject = "Demande d'inscription rejetée";
-            mail.From = new MailAddress("markonolitse@gmail.com");
+            mail.Subject = subject; 
+            mail.From = new MailAddress("netatlas2022@gmail.com");
             mail.To.Add(new MailAddress(adr));
 
             SmtpClient client = new SmtpClient("smtp.gmail.com",587);
             client.EnableSsl = true;
-            client.Credentials = new System.Net.NetworkCredential("markonolitse@gmail.com", "");
+            client.Credentials = new System.Net.NetworkCredential("netatlas2022@gmail.com", "Qsdf#2022");
             client.Send(mail);
 
         }
@@ -151,19 +156,26 @@ namespace NetAtlas.Controllers
             return View(menber);
         }
 
-        public async Task<IActionResult> ValiderSup()
-        {
-            return View();
-        }
+        
 
-        [HttpPost, ActionName("SuppMembre")]
+        [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> SuppMembreV(int id)
+        public async Task<IActionResult> ValiderSup(int id)
         {
             var menber = await BaseDeDonnee.Membre.FindAsync(id);
+            try
+            {
+                string body = "<h1>Suppression du compte</h1> <p style='color:red;'>En raison de vos violations multiples des politiques de NetAtlas vous avez été banni<br/>";
+                EnvoiMail(menber.Email, body, "Bannissement de NetAtlas");
+                ViewBag.checkEnvoi = true;
+            }
+            catch (Exception ex)
+            {
+                ViewBag.checkEnvoi = false;
+            }
             BaseDeDonnee.Remove(menber);
             await BaseDeDonnee.SaveChangesAsync();
-            return RedirectToAction(nameof(ValiderSup));
+            return View();
         }
 
 
