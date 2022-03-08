@@ -2,7 +2,7 @@
 
 @{
     Layout = "_LayoutAdmin";
-    ViewData["Title"] = "Autorisation";
+    ViewData["Title"] = "Suppression";
 }
 
 <html>
@@ -22,9 +22,10 @@
               L' email n' a pas pu être envoyé
             </div>
         }
-        <h1 class="text-success">Cette demande a été acceptée avec succès</h1>
 
-        <div >
+        <h1 class="text-success">Ce membre a été restauré avec succès</h1>
+        
+         <div >
             <hr />
             <dl class="row">
                 <dt class = "col-sm-2">
@@ -48,13 +49,10 @@
         
             </dl>
         </div>
-
-    
-
         <script>
             function f()
             {
-                window.location.replace("../Index");
+                window.location.replace("MembresAverti");
             }
 
             function redirection()

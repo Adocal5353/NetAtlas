@@ -20,7 +20,15 @@ namespace NetAtlas.Controllers
         //Voir la liste des demandes d'inscriptions non traitées
         public async Task<IActionResult> Index()
         {
-            return View( await BaseDeDonnee.Register.ToListAsync());
+            var type = HttpContext.Session.GetString("UserType");
+            if (type is not "admin")
+            {
+                return RedirectToAction("Login", "Membre");
+            }
+            else
+            {
+                return View(await BaseDeDonnee.Register.ToListAsync());
+            }
         }
 
         // GET:Autoristion
@@ -117,8 +125,6 @@ namespace NetAtlas.Controllers
            return View(register);
         }
 
-       
-
 
 
         private void EnvoiMail(string adr,string body,string subject)
@@ -179,6 +185,36 @@ namespace NetAtlas.Controllers
         }
 
 
+        public async Task<IActionResult> RestaureMembre(int id)
+        {
+            var menber = await BaseDeDonnee.Membre.FindAsync(id);
+            if (menber is null)
+            {
+                return NotFound();
+            }
+            return View(menber);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> ValiderRes(int id)
+        {
+            var menber = await BaseDeDonnee.Membre.FindAsync(id);
+            try
+            {
+                string body = "<h1>Restauration du compte</h1> <p style='color:green;'>Les compteurs sont remis à zéro<br/>";
+                EnvoiMail(menber.Email, body, "Bannissement de NetAtlas");
+                ViewBag.checkEnvoi = true;
+            }
+            catch (Exception ex)
+            {
+                ViewBag.checkEnvoi = false;
+            }
+            menber.NbrAvertissement = 0;
+            BaseDeDonnee.Update(menber);
+            await BaseDeDonnee.SaveChangesAsync();
+            return View(menber);
+        }
     }
 
     

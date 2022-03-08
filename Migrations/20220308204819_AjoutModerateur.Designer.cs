@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using NetAtlas.Data;
 
@@ -10,9 +11,10 @@ using NetAtlas.Data;
 namespace NetAtlas.Migrations
 {
     [DbContext(typeof(NetAtlasContext))]
-    partial class NetAtlasContextModelSnapshot : ModelSnapshot
+    [Migration("20220308204819_AjoutModerateur")]
+    partial class AjoutModerateur
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
