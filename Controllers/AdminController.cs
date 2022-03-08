@@ -141,8 +141,32 @@ namespace NetAtlas.Controllers
         {
             return View(await BaseDeDonnee.Membre.Where(m=>m.NbrAvertissement>=3).ToListAsync());
         }
+        public async Task<IActionResult> SuppMembre(int id)
+        {
+            var menber = await BaseDeDonnee.Membre.FindAsync(id);
+            if (menber is null)
+            {
+                return NotFound();
+            }
+            return View(menber);
+        }
 
-        
+        public async Task<IActionResult> ValiderSup()
+        {
+            return View();
+        }
+
+        [HttpPost, ActionName("SuppMembre")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> SuppMembreV(int id)
+        {
+            var menber = await BaseDeDonnee.Membre.FindAsync(id);
+            BaseDeDonnee.Remove(menber);
+            await BaseDeDonnee.SaveChangesAsync();
+            return RedirectToAction(nameof(ValiderSup));
+        }
+
+
     }
 
     
