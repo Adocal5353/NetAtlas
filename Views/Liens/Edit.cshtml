@@ -1,17 +1,8 @@
 ﻿@model NetAtlas.Models.Lien
 
 @{
-    Layout = null;
+   Layout ="_LayoutMembre";
 }
-
-<!DOCTYPE html>
-
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>Edit</title>
-</head>
-<body>
 
 <h4>Lien</h4>
 <hr />
@@ -47,5 +38,4 @@
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }
-</body>
-</html>
+

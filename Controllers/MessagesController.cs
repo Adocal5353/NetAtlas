@@ -55,6 +55,13 @@ namespace NetAtlas.Controllers
         // GET: Messages/Create
         public IActionResult Create()
         {
+            var type = HttpContext.Session.GetString("UserType");
+            if (type is not "membre")
+            {
+                return Unauthorized();
+            }
+            var user = GetMembre();
+            ViewBag.Membre = user.Nom + " " + user.Prenom;
             return View();
         }
 
@@ -71,6 +78,7 @@ namespace NetAtlas.Controllers
                 return Unauthorized();
             }
             var user = GetMembre();
+            ViewBag.Membre = user.Nom + " " + user.Prenom;
             Publication p = new Publication();
             p.DatePublication = DateTime.Now;
             p.IdMemdre = user.Id;
@@ -80,7 +88,9 @@ namespace NetAtlas.Controllers
             message.nomRessource = nomRessource;
             message.IdPublication = p.Id;
             message.contenu = contenu;
-            return View();
+            _context.Message.Add(message);
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
 
         }
 

@@ -59,7 +59,7 @@ namespace NetAtlas.Controllers
                         await bd.SaveChangesAsync();
                         HttpContext.Session.SetString("UserSession", JsonSerializer.Serialize(member));
                         HttpContext.Session.SetString("UserType", "membre");
-                        return RedirectToAction("Index", "Publication");
+                        return RedirectToAction("Index", "Amities");
 
                     }
                     catch (DbUpdateConcurrencyException)
