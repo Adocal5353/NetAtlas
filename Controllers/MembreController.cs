@@ -145,8 +145,6 @@ namespace NetAtlas.Controllers
             }
             else
             {
-                List<Membre> nonAmi = new List<Membre>();
-
                 var user = GetMembre();
 
                 ViewBag.Membre=user.Nom+" "+user.Prenom;
