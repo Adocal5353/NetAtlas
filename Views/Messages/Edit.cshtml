@@ -25,11 +25,7 @@
                 <span asp-validation-for="contenu" class="text-danger"></span>
             </div>
             <input type="hidden" asp-for="Id" />
-            <div class="form-group">
-                <label asp-for="IdPublication" class="control-label"></label>
-                <select asp-for="IdPublication" class="form-control" asp-items="ViewBag.IdPublication"></select>
-                <span asp-validation-for="IdPublication" class="text-danger"></span>
-            </div>
+            <input type="hidden" asp-for="IdPublication" />
             <div class="form-group">
                 <label asp-for="nomRessource" class="control-label"></label>
                 <input asp-for="nomRessource" class="form-control" />

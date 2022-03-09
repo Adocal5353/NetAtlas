@@ -110,7 +110,7 @@ namespace NetAtlas.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Url,Id,IdPublication,nomRessource,Type")] Lien lien)
+        public async Task<IActionResult> Edit(int id, [Bind("Url,Id,IdPublication,nomRessource")] Lien lien)
         {
             if (id != lien.Id)
             {

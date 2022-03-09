@@ -6,5 +6,6 @@ namespace NetAtlas.Models
     {
         public float TailleEnMo { get; set; }
         public String Chemin { get; set; }
+        public int TypeMedia { get; set; }  //1 pour photo 2 pour vidéo
     }
 }

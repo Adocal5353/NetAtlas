@@ -7,9 +7,10 @@ namespace NetAtlas.Models
         [Key]
         public int Id { get; set; }
 
+        [StringLength(50)]
         public string Nom { get; set; }
 
-
+        [StringLength(100)]
         public string Prenom { get; set; }
 
         [Required, DataType(DataType.EmailAddress),StringLength(30,ErrorMessage ="Cet adresse mail n'est pas valide")]

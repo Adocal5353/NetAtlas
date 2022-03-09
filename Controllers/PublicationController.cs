@@ -37,9 +37,30 @@ namespace NetAtlas.Controllers
                 var q1 =
                     from c1 in _context.Amitie
                     from p1 in _context.Publication
-                    where c1.Receiver == p1.Menber && c1.Statut == 1 && c1.IdSender == user.Id
+                    where  c1.Statut == 1 && (c1.IdSender == user.Id || c1.IdReceiver==user.Id)
                     select p1;
-                return View(q1);
+                foreach(var item in q1)
+                {
+                    var dico = new Dictionary<string, object>();
+                    dico["publication"] = item;
+                    var res = _context.Lien.FirstAsync(r => r.IdPublication == item.Id);
+                    var res2= _context.Message.FirstAsync(r => r.IdPublication == item.Id);
+                    var res3= _context.PhotoVideo.FirstAsync(r => r.IdPublication == item.Id);
+                    if(res is not null)
+                    {
+                        dico["ressource"]=res;
+                    } else if(res2 is not null)
+                    {
+                        dico["ressource"] = res2;
+                    }else if(res3 is not null)
+                    {
+                        dico["ressource"] = res3;
+                    }
+
+                    
+                    ViewBag.ListPub.Add(dico);
+                }
+                return View();
                     
             }
            

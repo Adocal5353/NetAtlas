@@ -1,8 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using NetAtlas.Data;
 using NetAtlas.Models;
+using System.Net.Mime;
 using System.Text.Json;
 using System.Web.Helpers;
+using System.Web;
+using System.IO;
 
 namespace NetAtlas.Controllers
 {
@@ -26,27 +29,108 @@ namespace NetAtlas.Controllers
             return value == null ? null : JsonSerializer.Deserialize<Membre>(value);
         }
 
-        public async Task<IActionResult> Create(WebImage image, string nomRessource)
+        public ActionResult Create()
+        {
+            return View();
+        }
+        
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Create(IFormFile file, string nomRessource)
         {
             var type = HttpContext.Session.GetString("UserType");
             if (type is not "membre")
             {
                 return Unauthorized();
             }
-            if(image is not null)
+            List<String> ListVideo = new List<String>()
             {
-                var user = GetMembre();
-                Publication p = new Publication();
-                p.DatePublication = DateTime.Now;
-                p.IdMemdre = user.Id;
-                _context.Publication.Add(p);
-                await _context.SaveChangesAsync();
-                var FileName = Guid.NewGuid().ToString() + "_" + Path.GetFileName(image.FileName);
-                var imagePath = @"images\" + FileName;
-                image.Save(@"~\"+imagePath);
-                return RedirectToAction(nameof(Index));
+                "video/mpeg",
+                "video/mp2t",
+                "video/webm",
+                "video/3gpp",
+                "video/3gp"
+                
+            };
+            List<String> ListPhoto = new List<String>()
+            {
+                "image/jpeg",
+                "image/png",
+                "image/tiff",
+                "image/avif",
+                "image/gif",
+                "image/bmp",
+                "image/svg+xml",
+                "image/webp"
+            };
+
+            if(file != null && file.Length>0)
+            {
+                if (ListPhoto.Contains(file.ContentType))
+                {
+                    var user = GetMembre();
+                    Publication p = new Publication();
+                    p.DatePublication = DateTime.Now;
+                    p.IdMemdre = user.Id;
+                    _context.Publication.Add(p);
+                    await _context.SaveChangesAsync();
+
+                    var fileName = Guid.NewGuid().ToString()+'_' + Path.GetFileName(file.FileName);
+                    var filePath = Path.Combine(Directory.GetCurrentDirectory(),"wwwroot/images", fileName);
+
+                    PhotoVideo photo = new PhotoVideo()
+                    {
+                        IdPublication = p.Id,
+                        nomRessource = nomRessource,
+                        Chemin = filePath,
+                        TypeMedia = 1,
+                        TailleEnMo = file.Length
+                    };
+                    _context.PhotoVideo.Add(photo);
+                    await _context.SaveChangesAsync();
+                    using(var fileStream = new FileStream(filePath, FileMode.Create))
+                    {
+                        await file.CopyToAsync(fileStream);
+                    }
+                    return RedirectToAction(nameof(Index));
+                }
+                else if (ListVideo.Contains(file.ContentType))
+                {
+                    var user = GetMembre();
+                    Publication p = new Publication();
+                    p.DatePublication = DateTime.Now;
+                    p.IdMemdre = user.Id;
+                    _context.Publication.Add(p);
+                    await _context.SaveChangesAsync();
+
+                    var fileName = Guid.NewGuid().ToString() + '_' + Path.GetFileName(file.FileName);
+                    var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images", fileName);
+
+                    PhotoVideo photo = new PhotoVideo()
+                    {
+                        IdPublication = p.Id,
+                        nomRessource = nomRessource,
+                        Chemin = filePath,
+                        TypeMedia = 2,
+                        TailleEnMo = file.Length
+                    };
+                    _context.PhotoVideo.Add(photo);
+                    await _context.SaveChangesAsync();
+                    using (var fileStream = new FileStream(filePath, FileMode.Create))
+                    {
+                        await file.CopyToAsync(fileStream);
+                    }
+                    return RedirectToAction(nameof(Index));
+
+                }
+                else
+                {
+                    ViewBag.Message = "Le format de votre fichier n'est pas valide. veuillez en choisir un autre";
+                    return View();
+                }
             }
-            
+
+            ViewBag.Message="Votre fichier est invalide ou endo"
             return View();
 
         }
