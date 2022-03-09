@@ -38,7 +38,7 @@ namespace NetAtlas.Controllers
                 var q1 =
                     from c1 in _context.Amitie
                     from p1 in _context.Publication
-                    where  c1.Statut == 1 && (c1.IdSender == user.Id || c1.IdReceiver==user.Id)
+                    where  c1.Statut == 1 && ((c1.IdSender == user.Id && p1.IdMemdre==c1.IdReceiver) || (c1.IdReceiver==user.Id && p1.IdMemdre==c1.IdSender))
                     select p1;
                 foreach(var item in q1)
                 {

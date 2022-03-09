@@ -9,7 +9,19 @@
     {
         if(item["ressource"] is Lien)
         {
-            
+            <div>
+                <small>@item["publication"].IdMemdre a posté un lien le @item["publication"].DatePublication</small>
+                <h3>@item["ressource"].nomRessouce</h3>
+                <p>@item["ressource"].Url</p>
+            </div>
+        }
+        if(item["ressource"] is Message)
+        {
+            <div>
+                <small>@item["publication"].IdMemdre a posté un message @item["publication"].DatePublication</small>
+                <h3>@item["ressource"].nomRessouce</h3>
+                <p>@item["ressource"].Contenu</p>
+            </div>
         }
     }*@
 </div>
