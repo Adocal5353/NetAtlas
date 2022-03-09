@@ -149,6 +149,8 @@ namespace NetAtlas.Controllers
 
                 var user = GetMembre();
 
+                ViewBag.Membre=user.Nom+" "+user.Prenom;
+
                 var q = await bd.Membre.Where(m => m.Id != user.Id).ToListAsync();
                 var q2= bd.Amitie.Include(a => a.Receiver).Where(a => a.IdSender == user.Id);
                 var q3 = bd.Amitie.Include(a => a.Sender).Where(a => a.IdReceiver == user.Id);
@@ -168,10 +170,7 @@ namespace NetAtlas.Controllers
                     }
                     foreach (var item2 in q3)
                     {
-
-
                         q.Remove(item2.Sender);
-
                     }
 
 

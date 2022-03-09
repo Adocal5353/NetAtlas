@@ -34,6 +34,7 @@ namespace NetAtlas.Controllers
             else
             {
                 var user = GetMembre();
+                ViewBag.Membre = user.Nom + " " + user.Prenom;
                 var q1 =
                     from c1 in _context.Amitie
                     from p1 in _context.Publication
