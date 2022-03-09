@@ -130,7 +130,7 @@ namespace NetAtlas.Controllers
                 }
             }
 
-            ViewBag.Message="Votre fichier est invalide ou endo"
+            ViewBag.Message="Votre fichier est invalide ou endomagé";
             return View();
 
         }
