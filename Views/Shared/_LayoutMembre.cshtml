@@ -12,15 +12,15 @@
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">NetAtlas</a>
+                <a class="navbar-brand fw-bold" asp-area="" asp-controller="Home" asp-action="Index">NetAtlas</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
+                    <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Publication" asp-action="Index">Voir les publication</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Publication" asp-action="Index">Voir les publications</a>
                         </li>
                         <li class="nav-item">
                             <div class="dropdown">
@@ -57,6 +57,61 @@
             &copy; 2022 - NetAtlas - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
         </div>
     </footer>
+     <style>
+        
+*
+{
+    font-family: Arial, Helvetica,sans-serif;
+    margin: 0px;
+    padding: 0px;
+    box-sizing: border-box;
+}
+
+
+
+
+
+      :root
+{
+    --main-color:blue;
+}
+.theme-color
+{
+    color:var(--main-color);
+}
+
+button.btn
+{
+    
+    background: none;
+    border: 2px solid var(--main-color);
+    border-radius: 10px;
+}
+button.btn:hover
+{
+    background-color: var(--main-color);
+}
+button a{
+    text-decoration: none;
+    color: var(--main-color);
+}
+button a:hover
+{
+    font-size:16px;
+}
+
+.navbar ul li a
+{
+    padding: 5px 15px;
+    margin: 0px 5px;
+}
+.navbar ul li a.act, .navbar ul li a:hover
+{
+    background: var(--main-color);
+    color: white !important;
+   
+}
+    </style>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
