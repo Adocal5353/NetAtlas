@@ -56,6 +56,13 @@ namespace NetAtlas.Controllers
         // GET: Liens/Create
         public IActionResult Create()
         {
+            var type = HttpContext.Session.GetString("UserType");
+            if (type is not "membre")
+            {
+                return Unauthorized();
+            }
+            var user = GetMembre();
+            ViewBag.Membre = user.Nom + " " + user.Prenom;
             return View();
         }
 
@@ -81,7 +88,7 @@ namespace NetAtlas.Controllers
             Lien.IdPublication = p.Id;
             Lien.Url = Url;
             Lien.nomRessource = nomRessource;
-
+            ViewBag.Membre = user.Nom + " " + user.Prenom;
             _context.Lien.Add(Lien);
             await _context.SaveChangesAsync();
             return RedirectToAction("Index");

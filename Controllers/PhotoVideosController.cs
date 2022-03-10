@@ -31,6 +31,13 @@ namespace NetAtlas.Controllers
 
         public ActionResult Create()
         {
+            var type = HttpContext.Session.GetString("UserType");
+            if (type is not "membre")
+            {
+                return Unauthorized();
+            }
+            var user = GetMembre();
+            ViewBag.Membre = user.Nom + " " + user.Prenom;
             return View();
         }
         
@@ -98,6 +105,7 @@ namespace NetAtlas.Controllers
                 else if (ListVideo.Contains(file.ContentType))
                 {
                     var user = GetMembre();
+                    ViewBag.Membre = user.Nom + " " + user.Prenom;
                     Publication p = new Publication();
                     p.DatePublication = DateTime.Now;
                     p.IdMemdre = user.Id;

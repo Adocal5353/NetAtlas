@@ -40,10 +40,8 @@ namespace NetAtlas.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Login(string? password,string? email)
         {
-            var member = await bd.Membre
-                .FirstOrDefaultAsync(m => m.Email == email);
-            var admin = await bd.Admin
-                .FirstOrDefaultAsync(ad=>ad.Email==email);
+            var member = await bd.Membre.FirstOrDefaultAsync(m => m.Email == email);
+            var admin = await bd.Admin.FirstOrDefaultAsync(ad=>ad.Email==email);
             var moderateur = await bd.Moderateur
                 .FirstOrDefaultAsync(mo => mo.Email == email);
 
@@ -59,7 +57,7 @@ namespace NetAtlas.Controllers
                         await bd.SaveChangesAsync();
                         HttpContext.Session.SetString("UserSession", JsonSerializer.Serialize(member));
                         HttpContext.Session.SetString("UserType", "membre");
-                        return RedirectToAction("Index", "Publication");
+                        return RedirectToAction("Index", "Amities");
 
                     }
                     catch (DbUpdateConcurrencyException)
