@@ -45,20 +45,20 @@ namespace NetAtlas.Controllers
                 {
                     var dico = new Dictionary<string, object>();
                     dico.Add("publication", item);
-                    var res = await _context.Lien.AnyAsync(r => r.IdPublication == item.Id);
-                    var res2 = await _context.Message.AnyAsync(r => r.IdPublication == item.Id);
-                    var res3 = await _context.PhotoVideo.AnyAsync(r => r.IdPublication == item.Id);
+                    var res = await _context.Lien.AnyAsync(r => r.IdPublication == item.Id && r.etat == false);
+                    var res2 = await _context.Message.AnyAsync(r => r.IdPublication == item.Id && r.etat == false);
+                    var res3 = await _context.PhotoVideo.AnyAsync(r => r.IdPublication == item.Id && r.etat == false);
                     if (res is true)
                     {
-                        dico.Add("ressource", await _context.Lien.FirstAsync(r => r.IdPublication == item.Id));
+                        dico.Add("ressource", await _context.Lien.FirstAsync(r => r.IdPublication == item.Id && r.etat == false));
                     }
                     else if (res2 is true)
                     {
-                        dico.Add("ressource", await _context.Message.FirstAsync(r => r.IdPublication == item.Id));
+                        dico.Add("ressource", await _context.Message.FirstAsync(r => r.IdPublication == item.Id && r.etat == false));
                     }
                     else if (res3 is true)
                     {
-                        dico.Add("ressource", await _context.PhotoVideo.FirstAsync(r => r.IdPublication == item.Id));
+                        dico.Add("ressource", await _context.PhotoVideo.FirstAsync(r => r.IdPublication == item.Id && r.etat == false));
                     }
 
                     if (dico is not null)
@@ -195,6 +195,30 @@ namespace NetAtlas.Controllers
 
         public async Task<IActionResult> Avertir(int ? id)
         {
+            if(id is null)
+            {
+                return NotFound();
+            }
+                
+            var res = _context.Ressource.Include(r => r.Publication).FirstOrDefault(m => m.Id == id);
+            if (res.Publication == null)
+            {
+                return NotFound(res.Publication);
+            }
+                
+
+            var menber = await _context.Membre.FirstOrDefaultAsync(m => m.Id==res.Publication.IdMemdre);  
+            if(menber ==null)
+            {
+                return NotFound(menber);
+            }
+                
+
+            menber.NbrAvertissement+=1;
+            res.etat = true;
+            _context.Update(res);
+            _context.Update(menber);
+            await _context.SaveChangesAsync();
             return View();
         }
     }

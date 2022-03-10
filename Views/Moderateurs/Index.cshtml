@@ -14,7 +14,7 @@
             if(item["ressource"] is Lien)
             {
                 <div>
-                    <small>@item["publication"].IdMemdre a posté un lien le @item["publication"].DatePublication</small>
+                    <small>lien posté le @item["publication"].DatePublication</small>
                     <h3>@item["ressource"].nomRessource</h3>
                     <a href='@item["ressource"]'>@item["ressource"].Url</a>
                 </div>
@@ -27,10 +27,15 @@
             if(item["ressource"] is Message)
             {
                 <div>
-                    <small>@item["publication"].IdMemdre a posté un message @item["publication"].DatePublication</small>
+                    <small>Message posté le @item["publication"].DatePublication</small>
                     <h3>@item["ressource"].nomRessource</h3>
                     <p>@item["ressource"].contenu</p>
                 </div>
+                <p>
+                    <a asp-controller="Moderateurs" asp-action="Avertir" asp-route-id='@item["ressource"].Id'>
+                        <input type="button" class="btn" value="Avertir"/>
+                    </a> 
+                </p>
             }
         }
     }
