@@ -43,16 +43,17 @@ namespace NetAtlas.Controllers
             {
                 return Unauthorized();
             }
-            List<String> ListVideo = new List<String>()
+            List<string> ListVideo = new List<string>()
             {
                 "video/mpeg",
                 "video/mp2t",
                 "video/webm",
                 "video/3gpp",
-                "video/3gp"
+                "video/3gp",
+                "video/mp4"
                 
             };
-            List<String> ListPhoto = new List<String>()
+            List<string> ListPhoto = new List<string>()
             {
                 "image/jpeg",
                 "image/png",
@@ -92,7 +93,7 @@ namespace NetAtlas.Controllers
                     {
                         await file.CopyToAsync(fileStream);
                     }
-                    return RedirectToAction(nameof(Index));
+                    return RedirectToAction("Index","Publication");
                 }
                 else if (ListVideo.Contains(file.ContentType))
                 {
@@ -120,7 +121,7 @@ namespace NetAtlas.Controllers
                     {
                         await file.CopyToAsync(fileStream);
                     }
-                    return RedirectToAction(nameof(Index));
+                    return RedirectToAction("Index","Publication");
 
                 }
                 else

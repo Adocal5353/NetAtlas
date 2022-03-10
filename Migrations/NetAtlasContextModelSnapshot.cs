@@ -248,6 +248,9 @@ namespace NetAtlas.Migrations
                     b.Property<float>("TailleEnMo")
                         .HasColumnType("float");
 
+                    b.Property<int>("TypeMedia")
+                        .HasColumnType("int");
+
                     b.HasDiscriminator().HasValue("PhotoVideo");
                 });
 

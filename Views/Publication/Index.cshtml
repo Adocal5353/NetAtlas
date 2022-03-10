@@ -5,23 +5,32 @@
 }
 
 <div class = "container">
-    @foreach (var item in ViewBag.ListPub)
+    @if(ViewBag.ListPub is not null)
     {
-        if(item["ressource"] is Lien)
+        
+   
+        @foreach (var item in ViewBag.ListPub)
         {
-            <div>
-                <small>@item["publication"].IdMemdre a posté un lien le @item["publication"].DatePublication</small>
-                <h3>@item["ressource"].nomRessouce</h3>
-                <p>@item["ressource"].Url</p>
-            </div>
+            if(item["ressource"] is Lien)
+            {
+                <div>
+                    <small>@item["publication"].IdMemdre a posté un lien le @item["publication"].DatePublication</small>
+                    <h3>@item["ressource"].nomRessource</h3>
+                    <p>@item["ressource"].Url</p>
+                </div>
+            }
+            if(item["ressource"] is Message)
+            {
+                <div>
+                    <small>@item["publication"].IdMemdre a posté un message @item["publication"].DatePublication</small>
+                    <h3>@item["ressource"].nomRessource</h3>
+                    <p>@item["ressource"].Contenu</p>
+                </div>
+            }
         }
-        if(item["ressource"] is Message)
-        {
-            <div>
-                <small>@item["publication"].IdMemdre a posté un message @item["publication"].DatePublication</small>
-                <h3>@item["ressource"].nomRessouce</h3>
-                <p>@item["ressource"].Contenu</p>
-            </div>
-        }
+    }
+    else
+    {
+        <h3>Vous n'avez aucune publication. Faite vous des amis pour pouvoir en voir ou creez la votre!</h3>
     }
 </div>
