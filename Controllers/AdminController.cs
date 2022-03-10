@@ -115,7 +115,7 @@ namespace NetAtlas.Controllers
                 EnvoiMail(register.Email, body, "Demande d'inscription rejetée") ;
                 ViewBag.checkEnvoi = true;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 ViewBag.checkEnvoi = false;
             }

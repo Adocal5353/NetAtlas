@@ -35,13 +35,43 @@ namespace NetAtlas.Controllers
             {
                 var user = GetMembre();
                 ViewBag.Membre = user.Nom + " " + user.Prenom;
+                var q2 = _context.Amitie.Include(a => a.Receiver).Where(a => a.IdSender == user.Id);
+                var q3 = _context.Amitie.Include(a => a.Sender).Where(a => a.IdReceiver == user.Id);
+                
                 var q1 = await _context.Publication.ToListAsync();
                 var mylist = new List<Dictionary<string, object>>();
-                    //from c1 in _context.Amitie
-                    //from p1 in _context.Publication
-                    //where  c1.Statut == 1 && ((c1.IdSender == user.Id && p1.IdMemdre==c1.IdReceiver) || (c1.IdReceiver==user.Id && p1.IdMemdre==c1.IdSender))
-                    //select p1;
-                foreach(var item in q1)
+
+                var pub = new  List<Publication>();
+                foreach (var item in q1)
+                {
+                    foreach(var item2 in q2)
+                    {
+                        if(item.Menber==item2.Receiver)
+                        {
+
+                            if(!pub.Contains(item))
+                            {
+                                pub.Add(item);
+                            }
+                        }
+                    }
+
+                    foreach (var item3 in q3)
+                    {
+                        if (item.Menber == item3.Sender)
+                        {
+
+                            if (!pub.Contains(item))
+                            {
+                                pub.Add(item);
+                            }
+                        }
+
+                    }
+                }
+
+
+                    foreach (var item in pub)
                 {
                     var dico = new Dictionary<string, object>();
                     var res = await _context.Lien.AnyAsync(r => r.IdPublication == item.Id);

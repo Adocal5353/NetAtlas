@@ -111,7 +111,7 @@ namespace NetAtlas.Controllers
                                 await bd.SaveChangesAsync();
                                 HttpContext.Session.SetString("UserSession", JsonSerializer.Serialize(moderateur));
                                 HttpContext.Session.SetString("UserType", "moderateur");
-
+                                return RedirectToAction("Index", "Moderateurs");
 
                             }
                             catch

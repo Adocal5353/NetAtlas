@@ -13,16 +13,16 @@
         {
             if(item["ressource"] is Lien)
             {
-                <div>
-                    <small>@item["publication"].IdMemdre a posté un lien le @item["publication"].DatePublication</small>
+                <div class="container col-6 bg-light">
+                    <small> <b>@item["publication"].Menber.Nom @item["publication"].Menber.Prenom</b> a posté un lien le @item["publication"].DatePublication</small>
                     <h3>@item["ressource"].nomRessource</h3>
-                    <p>@item["ressource"].Url</p>
+                    <a href="@item["ressource"].Url">@item["ressource"].Url</a>
                 </div>
             }
             else if(item["ressource"] is Message)
             {
-                <div>
-                    <small>@item["publication"].IdMemdre a posté un message @item["publication"].DatePublication</small>
+                <div class="container col-6 bg-light">
+                    <small><b>@item["publication"].Menber.Nom @item["publication"].Menber.Prenom</b> a posté un message @item["publication"].DatePublication</small>
                     <h3>@item["ressource"].nomRessource</h3>
                     <p>@item["ressource"].contenu</p>
                 </div>

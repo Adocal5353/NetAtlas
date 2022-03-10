@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -19,6 +20,12 @@ namespace NetAtlas.Controllers
             _context = context;
         }
 
+        public Moderateur? GetModerateur()
+        {
+            var value = HttpContext.Session.GetString("UserSession");
+            return value == null ? null : JsonSerializer.Deserialize<Moderateur>(value);
+        }
+
         // GET: Moderateurs
         public async Task<IActionResult> Index()
         {
@@ -29,10 +36,38 @@ namespace NetAtlas.Controllers
             }
             else
             {
-                return View(await _context.Publication.ToListAsync());
+                var user = GetModerateur();
+                ViewBag.Moderateur = user.Nom + " " + user.Prenom;
+                var q1 = await _context.Publication.ToListAsync();
+                var mylist = new List<Dictionary<string, object>>();
+
+                foreach (var item in q1)
+                {
+                    var dico = new Dictionary<string, object>();
+                    dico.Add("publication", item);
+                    var res = await _context.Lien.AnyAsync(r => r.IdPublication == item.Id && r.etat == false);
+                    var res2 = await _context.Message.AnyAsync(r => r.IdPublication == item.Id && r.etat == false);
+                    var res3 = await _context.PhotoVideo.AnyAsync(r => r.IdPublication == item.Id && r.etat == false);
+                    if (res is true)
+                    {
+                        dico.Add("ressource", await _context.Lien.FirstAsync(r => r.IdPublication == item.Id && r.etat == false));
+                    }
+                    else if (res2 is true)
+                    {
+                        dico.Add("ressource", await _context.Message.FirstAsync(r => r.IdPublication == item.Id && r.etat == false));
+                    }
+                    else if (res3 is true)
+                    {
+                        dico.Add("ressource", await _context.PhotoVideo.FirstAsync(r => r.IdPublication == item.Id && r.etat == false));
+                    }
+
+                    if (dico is not null)
+                        mylist.Add(dico);
+                }
+                ViewBag.ListPub = mylist;
+                return View();
             }
         }
-
         // GET: Moderateurs/Details/5
         public async Task<IActionResult> Details(int? id)
         {
@@ -156,6 +191,35 @@ namespace NetAtlas.Controllers
         private bool ModerateurExists(int id)
         {
             return _context.Moderateur.Any(e => e.Id == id);
+        }
+
+        public async Task<IActionResult> Avertir(int ? id)
+        {
+            if(id is null)
+            {
+                return NotFound();
+            }
+                
+            var res = _context.Ressource.Include(r => r.Publication).FirstOrDefault(m => m.Id == id);
+            if (res.Publication == null)
+            {
+                return NotFound(res.Publication);
+            }
+                
+
+            var menber = await _context.Membre.FirstOrDefaultAsync(m => m.Id==res.Publication.IdMemdre);  
+            if(menber ==null)
+            {
+                return NotFound(menber);
+            }
+                
+
+            menber.NbrAvertissement+=1;
+            res.etat = true;
+            _context.Update(res);
+            _context.Update(menber);
+            await _context.SaveChangesAsync();
+            return View();
         }
     }
 }
