@@ -19,12 +19,12 @@
                     <p>@item["ressource"].Url</p>
                 </div>
             }
-            if(item["ressource"] is Message)
+            else if(item["ressource"] is Message)
             {
                 <div>
                     <small>@item["publication"].IdMemdre a posté un message @item["publication"].DatePublication</small>
                     <h3>@item["ressource"].nomRessource</h3>
-                    <p>@item["ressource"].Contenu</p>
+                    <p>@item["ressource"].contenu</p>
                 </div>
             }
         }
