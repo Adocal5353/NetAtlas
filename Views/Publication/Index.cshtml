@@ -28,7 +28,14 @@
                 </div>
             }
 
-            
+            else if(item["ressource"] is PhotoVideo && item["ressource"].TypeMedia==1)
+            {
+                <div class="container col-6 bg-light">
+                    <small><b>@item["publication"].Menber.Nom @item["publication"].Menber.Prenom</b> a posté un message @item["publication"].DatePublication</small>
+                    <h3>@item["ressource"].nomRessource</h3>
+                    <img src='@item["ressource"].Chemin'/>
+                </div>
+            }
         }
     }
     else

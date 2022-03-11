@@ -69,7 +69,7 @@ namespace NetAtlas.Controllers
 
                     }
 
-                    if (item.Menber == user)
+                    if (item.Menber.Id == user.Id)
                     {
                         pub.Add(item);
                     }
@@ -80,7 +80,8 @@ namespace NetAtlas.Controllers
               
 
                     foreach (var item in pub)
-                {
+                {   if(item.etat==false)
+                    { 
                     var dico = new Dictionary<string, object>();
                     var res = await _context.Lien.AnyAsync(r => r.IdPublication == item.Id);
                     var res2= await _context.Message.AnyAsync(r => r.IdPublication == item.Id);
@@ -105,6 +106,7 @@ namespace NetAtlas.Controllers
 
                     if(res==true || res2==true || res3==true)
                         mylist.Add(dico);
+                    }
                 }
                 ViewBag.ListPub=mylist;
                 return View();

@@ -84,7 +84,7 @@ namespace NetAtlas.Controllers
                     await _context.SaveChangesAsync();
 
                     var fileName = Guid.NewGuid().ToString()+'_' + Path.GetFileName(file.FileName);
-                    var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images", fileName);
+                    var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot","images", fileName);
 
                     PhotoVideo photo = new PhotoVideo()
                     {
