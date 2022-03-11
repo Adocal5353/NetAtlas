@@ -19,7 +19,7 @@
                     <a href="@item["ressource"].Url">@item["ressource"].Url</a>
                 </div>
             }
-            if(item["ressource"] is Message)
+            else if(item["ressource"] is Message)
             {
                 <div class="container col-6 bg-light">
                     <small><b>@item["publication"].Menber.Nom @item["publication"].Menber.Prenom</b> a posté un message @item["publication"].DatePublication</small>

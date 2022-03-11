@@ -81,31 +81,30 @@ namespace NetAtlas.Controllers
 
                     foreach (var item in pub)
                 {
-                    if (item.etat == false)
+                    var dico = new Dictionary<string, object>();
+                    var res = await _context.Lien.AnyAsync(r => r.IdPublication == item.Id);
+                    var res2= await _context.Message.AnyAsync(r => r.IdPublication == item.Id);
+                    var res3= await _context.PhotoVideo.AnyAsync(r => r.IdPublication == item.Id);
+                    if(res is true)
                     {
-
-
-                        var dico = new Dictionary<string, object>();
                         dico.Add("publication", item);
-                        var res = await _context.Lien.AnyAsync(r => r.IdPublication == item.Id);
-                        var res2 = await _context.Message.AnyAsync(r => r.IdPublication == item.Id);
-                        var res3 = await _context.PhotoVideo.AnyAsync(r => r.IdPublication == item.Id);
-                        if (res is true)
-                        {
-                            dico.Add("ressource", await _context.Lien.FirstAsync(r => r.IdPublication == item.Id));
-                        }
-                        else if (res2 is true)
-                        {
-                            dico.Add("ressource", await _context.Message.FirstAsync(r => r.IdPublication == item.Id));
-                        }
-                        else if (res3 is true)
-                        {
-                            dico.Add("ressource", await _context.PhotoVideo.FirstAsync(r => r.IdPublication == item.Id));
-                        }
 
-                        if (dico is not null)
-                            mylist.Add(dico);
+                        dico.Add("ressource",await _context.Lien.FirstAsync(r=>r.IdPublication==item.Id));
+                    } else if(res2 is true)
+                    {
+                        dico.Add("publication", item);
+
+                        dico.Add("ressource",await _context.Message.FirstAsync(r => r.IdPublication == item.Id));
                     }
+                    else if(res3 is true)
+                    {
+                        dico.Add("publication", item);
+
+                        dico.Add("ressource",await _context.PhotoVideo.FirstAsync(r => r.IdPublication == item.Id));
+                    }
+
+                    if(res==true || res2==true || res3==true)
+                        mylist.Add(dico);
                 }
                 ViewBag.ListPub=mylist;
                 return View();
