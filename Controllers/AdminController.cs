@@ -127,7 +127,7 @@ namespace NetAtlas.Controllers
 
 
 
-        private void EnvoiMail(string adr,string body,string subject)
+        public void EnvoiMail(string adr,string body,string subject)
         {
             
 
@@ -206,7 +206,7 @@ namespace NetAtlas.Controllers
                 EnvoiMail(menber.Email, body, "Bannissement de NetAtlas");
                 ViewBag.checkEnvoi = true;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 ViewBag.checkEnvoi = false;
             }

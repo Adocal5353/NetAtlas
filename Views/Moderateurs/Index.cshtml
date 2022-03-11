@@ -5,7 +5,7 @@
 }
 
 <div class = "container">
-    @if(ViewBag.ListPub is not null)
+    @if(ViewBag.ListPub!=null)
     {
       
    
@@ -36,6 +36,15 @@
                         <input type="button" class="btn" value="Avertir"/>
                     </a> 
                 </p>
+            }
+
+            if(item["ressource"] is PhotoVideo && item["ressource"].TypeMedia==1)
+            {
+                <div class="container col-6 bg-light">
+                    <small>Image posté le @item["publication"].DatePublication</small>
+                    <h3>@item["ressource"].nomRessource</h3>
+                    <img src='@item["ressource"].Chemin' alt='yfyu'/>
+                </div>
             }
         }
     }

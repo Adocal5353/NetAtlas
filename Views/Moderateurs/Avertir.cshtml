@@ -5,3 +5,39 @@
 }
 
 
+<html>
+        <body onload="redirection()">
+        @if (ViewBag.checkEnvoi){
+            <div class="alert alert-success alert-dismissible col-3" role="alert" style="margin-right:0px;margin-top:0px">
+              <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span></button>
+              L' email a bien été envoyé
+            </div>
+        }
+        else
+        {
+            <div class="alert alert-warning alert-dismissible col-3" role="alert" style="margin-right:0px;margin-top:0px">
+              <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span></button>
+              L' email n' a pas pu être envoyé
+            </div>
+        }
+
+        <h1 class="text-success">Cette publication a bien été avertie</h1>
+        
+
+        <script>
+            function f()
+            {
+                window.location.replace("MembresAverti");
+            }
+
+            function redirection()
+            {
+                setTimeout(f,5000);
+            }
+
+    
+        </script>
+    </body>
+</html>

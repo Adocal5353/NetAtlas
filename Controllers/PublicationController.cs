@@ -38,7 +38,7 @@ namespace NetAtlas.Controllers
                 var q2 = _context.Amitie.Include(a => a.Receiver).Where(a => a.IdSender == user.Id && a.Statut==1);
                 var q3 = _context.Amitie.Include(a => a.Sender).Where(a => a.IdReceiver == user.Id && a.Statut == 1);
                 
-                var q1 = await _context.Publication.ToListAsync();
+                var q1 = await _context.Publication.Include(p => p.Menber).ToListAsync();
                 var mylist = new List<Dictionary<string, object>>();
 
                 var pub = new  List<Publication>();
@@ -68,8 +68,16 @@ namespace NetAtlas.Controllers
                         }
 
                     }
+
+                    if (item.Menber == user)
+                    {
+                        pub.Add(item);
+                    }
+
+
                 }
 
+              
 
                     foreach (var item in pub)
                 {

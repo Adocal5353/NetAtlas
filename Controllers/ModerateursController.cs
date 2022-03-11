@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Mail;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
@@ -8,7 +9,6 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using NetAtlas.Data;
 using NetAtlas.Models;
-
 namespace NetAtlas.Controllers
 {
     public class ModerateursController : Controller
@@ -217,14 +217,44 @@ namespace NetAtlas.Controllers
             {
                 return NotFound(menber);
             }
-                
-
-            menber.NbrAvertissement+=1;
+            menber.NbrAvertissement += 1;
             res.Publication.etat = true;
+            try
+            {
+                string body = "<h1>Avertissement d'une publication</h1> <p style='color:red;'>Une de vos publication ne respectant pas les politiques de NetAtlas a été supprimée<br/>Sachez qu'après 3 avertissement vous pourriez etre banni de notre communauté";
+                EnvoiMail(menber.Email, body, "Avertissement");
+                ViewBag.checkEnvoi = true;
+            }
+            catch (Exception)
+            {
+                ViewBag.checkEnvoi = false;
+            }
+            
             _context.Update(res.Publication);
             _context.Update(menber);
             await _context.SaveChangesAsync();
             return View();
+        }
+
+
+        public void EnvoiMail(string adr, string body, string subject)
+        {
+
+
+            MailMessage mail = new MailMessage();
+
+            mail.Priority = MailPriority.High;
+            mail.IsBodyHtml = true;
+            mail.Body = body;
+            mail.Subject = subject;
+            mail.From = new MailAddress("netatlas2022@gmail.com");
+            mail.To.Add(new MailAddress(adr));
+
+            SmtpClient client = new SmtpClient("smtp.gmail.com", 587);
+            client.EnableSsl = true;
+            client.Credentials = new System.Net.NetworkCredential("netatlas2022@gmail.com", "Qsdf#2022");
+            client.Send(mail);
+
         }
     }
 }
