@@ -215,6 +215,30 @@ namespace NetAtlas.Controllers
             await BaseDeDonnee.SaveChangesAsync();
             return View(menber);
         }
+
+
+        public async Task<IActionResult> Liste()
+        {
+            return View(await BaseDeDonnee.Membre.ToListAsync());
+        }
+
+        public async Task<IActionResult> SupPub()
+        {
+            ViewBag.check = false;
+            return View(await BaseDeDonnee.Publication.Where(p=> p.etat==true).ToListAsync());
+        }
+
+
+        [HttpPost, ActionName("SupPub")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteConfirmed(int id)
+        {
+            var pub = await BaseDeDonnee.Publication.FindAsync(id);
+            ViewBag.check = true;
+            BaseDeDonnee.Publication.Remove(pub);
+            await BaseDeDonnee.SaveChangesAsync();
+            return View(await BaseDeDonnee.Publication.Where(p => p.etat == true).ToListAsync());
+        }
     }
 
     
