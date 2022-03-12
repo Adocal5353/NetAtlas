@@ -149,9 +149,9 @@ namespace NetAtlas.Controllers
 
 
          public async Task<IActionResult> MembresAverti()
-        {
+         {
             return View(await BaseDeDonnee.Membre.Where(m=>m.NbrAvertissement>=3).ToListAsync());
-        }
+         }
         public async Task<IActionResult> SuppMembre(int id)
         {
             var menber = await BaseDeDonnee.Membre.FindAsync(id);

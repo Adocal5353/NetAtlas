@@ -135,6 +135,13 @@ namespace NetAtlas.Controllers
             return View();
         }
 
+        public ActionResult Deconnexion()
+        {
+            HttpContext.Session.Remove("userSession");
+            HttpContext.Session.Remove("UserType");
+            return RedirectToAction("Index", "Home");
+            
+        }
         public async Task<IActionResult> ListeMembre()
         {
             var type = HttpContext.Session.GetString("UserType");
