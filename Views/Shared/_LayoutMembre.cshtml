@@ -7,59 +7,72 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/NetAtlas.styles.css" asp-append-version="true" />
+    <!-- Favicons -->
+    <link href="~/assets/img/favicon.png" rel="icon">
+    <link href="~/assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Roboto:300,300i,400,400i,500,500i,700,700i&display=swap" rel="stylesheet">
+
+    <!-- Vendor CSS Files -->
+    <link href="~/assets/vendor/animate.css/animate.min.css" rel="stylesheet">
+    <link href="~/assets/vendor/aos/aos.css" rel="stylesheet">
+    <link href="~/assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="~/assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+    <link href="~/assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+    <link href="~/assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+    <link href="~/assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+
+    <!-- Template Main CSS File -->
+    <link href="~/assets/css/style.css" rel="stylesheet">
 </head>
 <body>
-    <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container-fluid">
-                <a class="navbar-brand fw-bold" asp-area="" asp-controller="Home" asp-action="Index">NetAtlas</a>
-               
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-                        <li class="nav-item">
-                            <div class="dropdown">
-                              <button type="button" class="btn  dropdown-toggle" data-bs-toggle="dropdown">
-                                Publication
-                              </button>
-                              <ul class="dropdown-menu">
-                                <li><a class="nav-link text-dark" asp-area="" asp-controller="Publication" asp-action="Index">Voir les publications</a></li>
-                                <li><h4 class="dropdown-header text-info">Faire une publication</h4></li>
-                                <li><a class="nav-link text-dark" asp-area="" asp-controller="Liens" asp-action="Create">Liens</a></li>
-                                <li><a class="nav-link text-dark" asp-area="" asp-controller="Messages" asp-action="Create">Messages</a></li>
-                                <li><a class="nav-link text-dark" asp-area="" asp-controller="PhotoVideos" asp-action="Create">Photos ou vidéos</a></li>
-                              </ul>
-                            </div>
-                            
-                        </li>
-                        <li class="nav-item">
-                            <div class="dropdown">
-                              <button type="button" class="btn  dropdown-toggle" data-bs-toggle="dropdown">
-                                Amitié
-                              </button>
-                              <ul class="dropdown-menu">
-                                <li><a class="nav-link text-dark" asp-area="" asp-controller="Membre" asp-action="ListeMembre">Envoyer une invitation</a></li>
-                                <li><a class="nav-link text-dark" asp-area="" asp-controller="Amities" asp-action="Index">Invitations</a></li>
-                              </ul>
-                            </div>
-                        </li>
-                       
-                        <li class="nav-item">
-                            <a class="nav-link text-primary" asp-area="" asp-controller="Membre" asp-action="Login">Se connecter</a>
-                        </li>
-                         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                        <li class="navbar-brand text-dark " style="font-family:'Baskerville Old Face';font-weight:bold">
-                            Hello @ViewBag.Membre
-                        </li>
+    <header id="header" class="fixed-top d-flex align-items-center ">
+    <div class="container d-flex justify-content-between align-items-center">
 
-                    </ul>
-                </div>
-            </div>
-        </nav>
-    </header>
-    <div class="container">
+      <div class="logo">
+        <h1 class="text-light"><a href="index.html"><span>Moderna</span></a></h1>
+        <!-- Uncomment below if you prefer to use an image logo -->
+        <!-- <a href="index.html"><img src="assets/img/logo.png" alt="" class="img-fluid"></a>-->
+      </div>
+
+      <nav id="navbar" class="navbar">
+        <ul>
+          @*<li><a class="active"  >Acceuil</a></li>
+          <li><a href="about.html">About</a></li>*@
+          <li><a>Bonjour ViewBag.Membre</a></li>
+          <li><a asp-controller="Membre" asp-action="RetirerAmi">Voir mes amis</a></li>
+          <li class="dropdown"><a href="#"><span>Publications</span> <i class="bi bi-chevron-down"></i></a>
+            <ul>
+              <li><a href="#">Voir mes publications</a></li>
+              <li class="dropdown"><a href="#"><span>Faire une publication</span> <i class="bi bi-chevron-right"></i></a>
+                <ul>
+                  @*<li><a href="#">Deep Drop Down 1</a></li>
+                  <li><a href="#">Deep Drop Down 2</a></li>*@
+                  <li><a asp-controller="Liens" asp-action="Create">Publier un lien</a></li>
+                  <li><a asp-controller="Messages" asp-action="Create">Publier un message</a></li>
+                  <li><a asp-controller="PhotoVideos" asp-action="Create">Publier un media</a></li>
+                </ul>
+              </li>
+              <li><a asp-controller="Publication" asp-action="Index">publications de mes amis</a></li>
+            </ul>
+          </li>
+           <li class="dropdown"><a href="#"><span>Invitations</span> <i class="bi bi-chevron-down"></i></a>
+            <ul>
+              <li><a asp-controller="Membre" asp-action="ListeMembre">Envoyer une invitation</a></li>
+              <li><a asp-controller="Amities" asp-action="Index">Voir les invitations reçus</a></li>
+              @*<li><a href="#">Voir les invitations reçus</a></li>
+              <li><a href="#">Drop Down 4</a></li>*@
+            </ul>
+          </li>
+          <li><a asp-controller="Membre" asp-action="Deconnexion">Se deconnecter</a></li>
+        </ul>
+        <i class="bi bi-list mobile-nav-toggle"></i>
+      </nav><!-- .navbar -->
+
+    </div>
+  </header><!-- End Header -->
+    <div class="container page">
         <main role="main" class="pb-3">
             @RenderBody()
         </main>
@@ -70,8 +83,9 @@
             &copy; 2022 - NetAtlas - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
         </div>
     </footer>
-     <style>
-        
+
+    <style>
+   /**     
 *
 {
     font-family: Arial, Helvetica,sans-serif;
@@ -80,7 +94,11 @@
     box-sizing: border-box;
 }
 
-
+.page
+{
+    background:;
+    height:100vh;
+}
 
 
 
@@ -123,11 +141,24 @@ button a:hover
     background: var(--main-color);
     color: white !important;
    
-}
+}*/
     </style>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+
+    <!-- Vendor JS Files -->
+  <script src="~/assets/vendor/purecounter/purecounter.js"></script>
+  <script src="~/assets/vendor/aos/aos.js"></script>
+  <script src="~/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="~/assets/vendor/glightbox/js/glightbox.min.js"></script>
+  <script src="~/assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
+  <script src="~/assets/vendor/swiper/swiper-bundle.min.js"></script>
+  <script src="~/assets/vendor/waypoints/noframework.waypoints.js"></script>
+  <script src="~/assets/vendor/php-email-form/validate.js"></script>
+
+  <!-- Template Main JS File -->
+  <script src="~/assets/js/main.js"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

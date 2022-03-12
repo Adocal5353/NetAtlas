@@ -108,7 +108,6 @@ namespace NetAtlas.Controllers
             {
                 return NotFound();
             }
-            ViewData["IdPublication"] = new SelectList(_context.Publication, "Id", "Id", lien.IdPublication);
             return View(lien);
         }
 

@@ -72,7 +72,7 @@ namespace NetAtlas.Controllers
 
 
                     foreach (var item in pub)
-                {
+                    {
                     var dico = new Dictionary<string, object>();
                     var res = await _context.Lien.AnyAsync(r => r.IdPublication == item.Id);
                     var res2= await _context.Message.AnyAsync(r => r.IdPublication == item.Id);
@@ -103,6 +103,53 @@ namespace NetAtlas.Controllers
                     
             }
            
+        }
+        public async Task<IActionResult> MesPublications()
+        {
+            var type = HttpContext.Session.GetString("UserType");
+            if (type is not "membre")
+            {
+                return RedirectToAction("Login", "Membre");
+            }
+            else
+            {
+                var user = GetMembre();
+                ViewBag.Membre = user.Nom + " " + user.Prenom;
+                var pub = _context.Publication.Include(p=>p.Menber).Where(p => p.IdMemdre == user.Id);
+                var mylist = new List<Dictionary<string, object>>();
+
+                foreach (var item in pub)
+                {
+                    var dico = new Dictionary<string, object>();
+                    var res = await _context.Lien.AnyAsync(r => r.IdPublication == item.Id);
+                    var res2 = await _context.Message.AnyAsync(r => r.IdPublication == item.Id);
+                    var res3 = await _context.PhotoVideo.AnyAsync(r => r.IdPublication == item.Id);
+                    if (res is true)
+                    {
+                        dico.Add("publication", item);
+
+                        dico.Add("ressource", await _context.Lien.FirstAsync(r => r.IdPublication == item.Id));
+                    }
+                    else if (res2 is true)
+                    {
+                        dico.Add("publication", item);
+
+                        dico.Add("ressource", await _context.Message.FirstAsync(r => r.IdPublication == item.Id));
+                    }
+                    else if (res3 is true)
+                    {
+                        dico.Add("publication", item);
+
+                        dico.Add("ressource", await _context.PhotoVideo.FirstAsync(r => r.IdPublication == item.Id));
+                    }
+
+                    if (res == true || res2 == true || res3 == true)
+                        mylist.Add(dico);
+                }
+                ViewBag.ListPub = mylist;
+                return View();
+            }
+
         }
 
         // GET: PublicationController/Details/5

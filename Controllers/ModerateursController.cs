@@ -44,20 +44,25 @@ namespace NetAtlas.Controllers
                 foreach (var item in q1)
                 {
                     var dico = new Dictionary<string, object>();
-                    dico.Add("publication", item);
                     var res = await _context.Lien.AnyAsync(r => r.IdPublication == item.Id && r.etat == false);
                     var res2 = await _context.Message.AnyAsync(r => r.IdPublication == item.Id && r.etat == false);
                     var res3 = await _context.PhotoVideo.AnyAsync(r => r.IdPublication == item.Id && r.etat == false);
                     if (res is true)
                     {
+                        dico.Add("publication", item);
+
                         dico.Add("ressource", await _context.Lien.FirstAsync(r => r.IdPublication == item.Id && r.etat == false));
                     }
                     else if (res2 is true)
                     {
+                        dico.Add("publication", item);
+
                         dico.Add("ressource", await _context.Message.FirstAsync(r => r.IdPublication == item.Id && r.etat == false));
                     }
                     else if (res3 is true)
                     {
+                        dico.Add("publication", item);
+
                         dico.Add("ressource", await _context.PhotoVideo.FirstAsync(r => r.IdPublication == item.Id && r.etat == false));
                     }
 
@@ -66,6 +71,20 @@ namespace NetAtlas.Controllers
                 }
                 ViewBag.ListPub = mylist;
                 return View();
+            }
+        }
+
+        public async Task<IActionResult> ListMembre()
+        {
+            var type = HttpContext.Session.GetString("UserType");
+            if (type is not "moderateur" or "admin")
+            {
+                return RedirectToAction("Login", "Membre");
+            }
+            else
+            {
+                var membres = await _context.Membre.ToListAsync();
+                return View(membres);
             }
         }
         // GET: Moderateurs/Details/5
