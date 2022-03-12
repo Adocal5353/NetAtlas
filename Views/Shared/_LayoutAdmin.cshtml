@@ -31,7 +31,7 @@
     <div class="container d-flex justify-content-between align-items-center">
 
       <div class="logo">
-        <h1 class="text-light"><a href="index.html"><span>Moderna</span></a></h1>
+        <h1 class="text-light"><a asp-action="Index" asp-controller="Home"><span>NETATLAS</span></a></h1>
         <!-- Uncomment below if you prefer to use an image logo -->
         <!-- <a href="index.html"><img src="assets/img/logo.png" alt="" class="img-fluid"></a>-->
       </div>
@@ -41,9 +41,10 @@
           @*<li><a class="active"  >Acceuil</a></li>
           <li><a href="about.html">About</a></li>*@
           <li><a>Bonjour Admin</a></li>
-          <li><a asp-controller="Membre" asp-action="RetirerAmi">Voir les publications avertis</a></li>
-          <li><a asp-controller="Membre" asp-action="RetirerAmi">Voir les membres avertis</a></li>
-          <li><a asp-controller="Membre" asp-action="RetirerAmi">Voir tous les membres</a></li>
+          <li><a asp-controller="Admin" asp-action="SupPub">Voir les publications avertis</a></li>
+          <li><a asp-controller="Admin" asp-action="MembresAverti">Voir les membres avertis</a></li>
+          <li><a asp-controller="Admin" asp-action="Liste">Voir tous les membres</a></li>
+          <li><a asp-controller="Admin" asp-action="Index">Voir les inscriptions en attente</a></li>
 
           <li><a asp-controller="Membre" asp-action="Deconnexion">Se deconnecter</a></li>
         </ul>
@@ -54,7 +55,9 @@
   </header><!-- End Header -->
     <div class="container page">
         <main role="main" class="pb-3">
+            <div class="mt-5">
             @RenderBody()
+            </div>
         </main>
     </div>
 

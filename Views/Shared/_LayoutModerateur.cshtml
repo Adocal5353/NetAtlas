@@ -41,8 +41,8 @@
           @*<li><a class="active"  >Acceuil</a></li>
           <li><a href="about.html">About</a></li>*@
           <li><a>Bonjour Moderateur</a></li>
-          <li><a asp-controller="Membre" asp-action="RetirerAmi">Consulter la liste des membres</a></li>
-          <li><a asp-controller="Membre" asp-action="RetirerAmi">Voir les publications</a></li>
+          <li><a asp-controller="Moderateurs" asp-action="Liste">Consulter la liste des membres</a></li>
+          <li><a asp-controller="Moderateur" asp-action="Index">Voir les publications</a></li>
 
           <li><a asp-controller="Membre" asp-action="Deconnexion">Se deconnecter</a></li>
         </ul>
@@ -51,9 +51,11 @@
 
     </div>
   </header><!-- End Header -->
-    <div class="container page">
+   <div class="container page">
         <main role="main" class="pb-3">
+            <div class="mt-5">
             @RenderBody()
+            </div>
         </main>
     </div>
 
