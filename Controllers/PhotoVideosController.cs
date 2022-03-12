@@ -84,7 +84,7 @@ namespace NetAtlas.Controllers
                     await _context.SaveChangesAsync();
 
                     var fileName = Guid.NewGuid().ToString()+'_' + Path.GetFileName(file.FileName);
-                    var filePath = Path.Combine(Directory.GetCurrentDirectory(),"wwwroot/images", fileName);
+                    var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot","images", fileName);
 
                     PhotoVideo photo = new PhotoVideo()
                     {
@@ -92,7 +92,7 @@ namespace NetAtlas.Controllers
                         nomRessource = nomRessource,
                         Chemin = filePath,
                         TypeMedia = 1,
-                        TailleEnMo = file.Length
+                        TailleEnMo = file.Length/1000000
                     };
                     _context.PhotoVideo.Add(photo);
                     await _context.SaveChangesAsync();
@@ -121,7 +121,7 @@ namespace NetAtlas.Controllers
                         nomRessource = nomRessource,
                         Chemin = filePath,
                         TypeMedia = 2,
-                        TailleEnMo = file.Length
+                        TailleEnMo = file.Length/1000000
                     };
                     _context.PhotoVideo.Add(photo);
                     await _context.SaveChangesAsync();

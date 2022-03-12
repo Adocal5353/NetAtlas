@@ -13,5 +13,7 @@ namespace NetAtlas.Models
 
         [ForeignKey("Menber")]
         public int IdMemdre { get; set; }
+
+        public bool etat { get; set; } = false;
     }
 }

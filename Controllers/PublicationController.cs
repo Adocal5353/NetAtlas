@@ -35,10 +35,10 @@ namespace NetAtlas.Controllers
             {
                 var user = GetMembre();
                 ViewBag.Membre = user.Nom + " " + user.Prenom;
-                var q2 = _context.Amitie.Include(a => a.Receiver).Where(a => a.IdSender == user.Id);
-                var q3 = _context.Amitie.Include(a => a.Sender).Where(a => a.IdReceiver == user.Id);
+                var q2 = _context.Amitie.Include(a => a.Receiver).Where(a => a.IdSender == user.Id && a.Statut==1);
+                var q3 = _context.Amitie.Include(a => a.Sender).Where(a => a.IdReceiver == user.Id && a.Statut == 1);
                 
-                var q1 = await _context.Publication.ToListAsync();
+                var q1 = await _context.Publication.Include(p => p.Menber).ToListAsync();
                 var mylist = new List<Dictionary<string, object>>();
 
                 var pub = new  List<Publication>();
@@ -68,30 +68,45 @@ namespace NetAtlas.Controllers
                         }
 
                     }
+
+                    if (item.Menber.Id == user.Id)
+                    {
+                        pub.Add(item);
+                    }
+
+
                 }
 
+              
 
                     foreach (var item in pub)
-                {
+                {   if(item.etat==false)
+                    { 
                     var dico = new Dictionary<string, object>();
-                    dico.Add("publication", item);
-                    var res = await _context.Lien.AnyAsync(r => r.IdPublication == item.Id && r.etat==false);
-                    var res2= await _context.Message.AnyAsync(r => r.IdPublication == item.Id && r.etat == false);
-                    var res3= await _context.PhotoVideo.AnyAsync(r => r.IdPublication == item.Id && r.etat == false);
+                    var res = await _context.Lien.AnyAsync(r => r.IdPublication == item.Id);
+                    var res2= await _context.Message.AnyAsync(r => r.IdPublication == item.Id);
+                    var res3= await _context.PhotoVideo.AnyAsync(r => r.IdPublication == item.Id);
                     if(res is true)
                     {
-                        dico.Add("ressource",await _context.Lien.FirstAsync(r=>r.IdPublication==item.Id && r.etat == false));
+                        dico.Add("publication", item);
+
+                        dico.Add("ressource",await _context.Lien.FirstAsync(r=>r.IdPublication==item.Id));
                     } else if(res2 is true)
                     {
-                        dico.Add("ressource",await _context.Message.FirstAsync(r => r.IdPublication == item.Id && r.etat == false));
+                        dico.Add("publication", item);
+
+                        dico.Add("ressource",await _context.Message.FirstAsync(r => r.IdPublication == item.Id));
                     }
                     else if(res3 is true)
                     {
-                        dico.Add("ressource",await _context.PhotoVideo.FirstAsync(r => r.IdPublication == item.Id && r.etat == false));
+                        dico.Add("publication", item);
+
+                        dico.Add("ressource",await _context.PhotoVideo.FirstAsync(r => r.IdPublication == item.Id));
                     }
 
-                    if(dico is not null)
+                    if(res==true || res2==true || res3==true)
                         mylist.Add(dico);
+                    }
                 }
                 ViewBag.ListPub=mylist;
                 return View();

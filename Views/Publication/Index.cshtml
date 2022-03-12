@@ -19,12 +19,21 @@
                     <a href="@item["ressource"].Url">@item["ressource"].Url</a>
                 </div>
             }
-            if(item["ressource"] is Message)
+            else if(item["ressource"] is Message)
             {
                 <div class="container col-6 bg-light">
                     <small><b>@item["publication"].Menber.Nom @item["publication"].Menber.Prenom</b> a posté un message @item["publication"].DatePublication</small>
                     <h3>@item["ressource"].nomRessource</h3>
                     <p>@item["ressource"].contenu</p>
+                </div>
+            }
+
+            else if(item["ressource"] is PhotoVideo && item["ressource"].TypeMedia==1)
+            {
+                <div class="container col-6 bg-light">
+                    <small><b>@item["publication"].Menber.Nom @item["publication"].Menber.Prenom</b> a posté un message @item["publication"].DatePublication</small>
+                    <h3>@item["ressource"].nomRessource</h3>
+                    <img src='@item["ressource"].Chemin'/>
                 </div>
             }
         }

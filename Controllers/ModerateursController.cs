@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Mail;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
@@ -8,7 +9,6 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using NetAtlas.Data;
 using NetAtlas.Models;
-
 namespace NetAtlas.Controllers
 {
     public class ModerateursController : Controller
@@ -43,27 +43,36 @@ namespace NetAtlas.Controllers
 
                 foreach (var item in q1)
                 {
-                    var dico = new Dictionary<string, object>();
-                    dico.Add("publication", item);
-                    var res = await _context.Lien.AnyAsync(r => r.IdPublication == item.Id && r.etat == false);
-                    var res2 = await _context.Message.AnyAsync(r => r.IdPublication == item.Id && r.etat == false);
-                    var res3 = await _context.PhotoVideo.AnyAsync(r => r.IdPublication == item.Id && r.etat == false);
-                    if (res is true)
+                    if (item.etat == false)
                     {
-                        dico.Add("ressource", await _context.Lien.FirstAsync(r => r.IdPublication == item.Id && r.etat == false));
-                    }
-                    else if (res2 is true)
-                    {
-                        dico.Add("ressource", await _context.Message.FirstAsync(r => r.IdPublication == item.Id && r.etat == false));
-                    }
-                    else if (res3 is true)
-                    {
-                        dico.Add("ressource", await _context.PhotoVideo.FirstAsync(r => r.IdPublication == item.Id && r.etat == false));
-                    }
+                        var dico = new Dictionary<string, object>();
+                        var res = await _context.Lien.AnyAsync(r => r.IdPublication == item.Id);
+                        var res2 = await _context.Message.AnyAsync(r => r.IdPublication == item.Id);
+                        var res3 = await _context.PhotoVideo.AnyAsync(r => r.IdPublication == item.Id);
+                        if (res is true)
+                        {
+                            dico.Add("publication", item);
 
-                    if (dico is not null)
-                        mylist.Add(dico);
+                            dico.Add("ressource", await _context.Lien.FirstAsync(r => r.IdPublication == item.Id));
+                        }
+                        else if (res2 is true)
+                        {
+                            dico.Add("publication", item);
+
+                            dico.Add("ressource", await _context.Message.FirstAsync(r => r.IdPublication == item.Id));
+                        }
+                        else if (res3 is true)
+                        {
+                            dico.Add("publication", item);
+
+                            dico.Add("ressource", await _context.PhotoVideo.FirstAsync(r => r.IdPublication == item.Id));
+                        }
+
+                        if (res == true || res2 == true || res3 == true)
+                            mylist.Add(dico);
+                    }
                 }
+                
                 ViewBag.ListPub = mylist;
                 return View();
             }
@@ -212,14 +221,44 @@ namespace NetAtlas.Controllers
             {
                 return NotFound(menber);
             }
-                
-
-            menber.NbrAvertissement+=1;
-            res.etat = true;
-            _context.Update(res);
+            menber.NbrAvertissement += 1;
+            res.Publication.etat = true;
+            try
+            {
+                string body = "<h1>Avertissement d'une publication</h1> <p style='color:red;'>Une de vos publication ne respectant pas les politiques de NetAtlas a été supprimée<br/>Sachez qu'après 3 avertissement vous pourriez etre banni de notre communauté";
+                EnvoiMail(menber.Email, body, "Avertissement");
+                ViewBag.checkEnvoi = true;
+            }
+            catch (Exception)
+            {
+                ViewBag.checkEnvoi = false;
+            }
+            
+            _context.Update(res.Publication);
             _context.Update(menber);
             await _context.SaveChangesAsync();
             return View();
+        }
+
+
+        public void EnvoiMail(string adr, string body, string subject)
+        {
+
+
+            MailMessage mail = new MailMessage();
+
+            mail.Priority = MailPriority.High;
+            mail.IsBodyHtml = true;
+            mail.Body = body;
+            mail.Subject = subject;
+            mail.From = new MailAddress("netatlas2022@gmail.com");
+            mail.To.Add(new MailAddress(adr));
+
+            SmtpClient client = new SmtpClient("smtp.gmail.com", 587);
+            client.EnableSsl = true;
+            client.Credentials = new System.Net.NetworkCredential("netatlas2022@gmail.com", "Qsdf#2022");
+            client.Send(mail);
+
         }
     }
 }
