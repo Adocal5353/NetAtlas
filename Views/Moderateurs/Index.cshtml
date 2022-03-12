@@ -13,13 +13,13 @@
         {
             if(item["ressource"] is Lien)
             {
-                <div class="container col-6 bg-light">
+                <div class="container col-6 bg-light rounded">
                     <small>lien posté le @item["publication"].DatePublication</small>
                     <h3>@item["ressource"].nomRessource</h3>
                     <a href='@item["ressource"]'>@item["ressource"].Url</a>
                     <p>
                         <a asp-controller="Moderateurs" asp-action="Avertir" asp-route-id='@item["ressource"].Id'>
-                        <input type="button" class="btn" value="Avertir"/>
+                        <input type="button" class="btn btn-primary" value="Avertir"/>
                     </a> 
                     </p>
                 </div>
@@ -27,13 +27,13 @@
             }
             if(item["ressource"] is Message)
             {
-                <div class="container col-6 bg-light">
+                <div class="container col-6 bg-light rounded">
                     <small>Message posté le @item["publication"].DatePublication</small>
                     <h3>@item["ressource"].nomRessource</h3>
                     <p>@item["ressource"].contenu</p>
                     <p>
                     <a asp-controller="Moderateurs" asp-action="Avertir" asp-route-id='@item["ressource"].Id'>
-                        <input type="button" class="btn" value="Avertir"/>
+                        <input type="button" class="btn btn-primary" value="Avertir"/>
                     </a> 
                 </p> 
                 </div>
@@ -42,20 +42,20 @@
 
             if(item["ressource"] is PhotoVideo && item["ressource"].TypeMedia==1)
             {
-                <div class="container col-6 bg-light">
+                <div class="container col-6 bg-light rounded">
                     <small>Image posté le @item["publication"].DatePublication</small>
                     <h3>@item["ressource"].nomRessource</h3>
                     <img src=@item["ressource"].Chemin alt='yfyu'/>
                     <p>
                         <a asp-controller="Moderateurs" asp-action="Avertir" asp-route-id='@item["ressource"].Id'>
-                            <input type="button" class="btn" value="Avertir"/>
+                            <input type="button" class="btn btn-primary" value="Avertir"/>
                         </a> 
                     </p>
                 </div>
             }
             else if(item["ressource"] is PhotoVideo && item["ressource"].TypeMedia==2)
             {
-                <div class="container col-6 bg-light">
+                <div class="container col-6 bg-light rounded">
                     <small><b>@item["publication"].Menber.Nom @item["publication"].Menber.Prenom</b> a posté une vidéo @item["publication"].DatePublication</small>
                     <h3>@item["ressource"].nomRessource</h3>
           
@@ -64,6 +64,11 @@
                     @*<video width="320" height="240" controls>
                       <source src='@item["ressource"].Chemin' type=video/mp4>
                     </video>*@
+                    <p>
+                        <a asp-controller="Moderateurs" asp-action="Avertir" asp-route-id='@item["ressource"].Id'>
+                            <input type="button" class="btn btn-primary" value="Avertir"/>
+                        </a> 
+                    </p>
                 </div>
             }
         }

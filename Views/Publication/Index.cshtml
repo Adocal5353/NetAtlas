@@ -18,6 +18,7 @@
                     <h3>@item["ressource"].nomRessource</h3>
                     <a href="@item["ressource"].Url">@item["ressource"].Url</a>
                 </div>
+                <br/>
             }
             else if(item["ressource"] is Message)
             {
@@ -26,6 +27,7 @@
                     <h3>@item["ressource"].nomRessource</h3>
                     <p>@item["ressource"].contenu</p>
                 </div>
+                <br/>
             }
 
             else if(item["ressource"] is PhotoVideo && item["ressource"].TypeMedia==1)
@@ -35,6 +37,7 @@
                     <h3>@item["ressource"].nomRessource</h3>
                     <img src='@item["ressource"].Chemin'/>
                 </div>
+                <br/>
             }
             else if(item["ressource"] is PhotoVideo && item["ressource"].TypeMedia==2)
             {
@@ -48,6 +51,7 @@
                       <source src='@item["ressource"].Chemin' type=video/mp4>
                     </video>
                 </div>
+                <br/>
             }
         }
     }

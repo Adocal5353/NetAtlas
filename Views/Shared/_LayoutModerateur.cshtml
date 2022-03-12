@@ -31,7 +31,7 @@
     <div class="container d-flex justify-content-between align-items-center">
 
       <div class="logo">
-        <h1 class="text-light"><a href="index.html"><span>Moderna</span></a></h1>
+        <h1 class="text-light"><a href="index.html"><span>NetAtlas</span></a></h1>
         <!-- Uncomment below if you prefer to use an image logo -->
         <!-- <a href="index.html"><img src="assets/img/logo.png" alt="" class="img-fluid"></a>-->
       </div>
@@ -40,9 +40,9 @@
         <ul>
           @*<li><a class="active"  >Acceuil</a></li>
           <li><a href="about.html">About</a></li>*@
-          <li><a>Bonjour Moderateur</a></li>
+          <li class="text-white"><a>Bonjour Moderateur</a></li>
           <li><a asp-controller="Moderateurs" asp-action="Liste">Consulter la liste des membres</a></li>
-          <li><a asp-controller="Moderateur" asp-action="Index">Voir les publications</a></li>
+          <li><a asp-controller="Moderateurs" asp-action="Index">Voir les publications</a></li>
 
           <li><a asp-controller="Membre" asp-action="Deconnexion">Se deconnecter</a></li>
         </ul>
@@ -52,7 +52,7 @@
     </div>
   </header><!-- End Header -->
    <div class="container page">
-        <main role="main" class="pb-3">
+        <main role="main" id="main" class="pb-3">
             <div class="mt-5">
             @RenderBody()
             </div>

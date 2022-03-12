@@ -108,6 +108,7 @@ namespace NetAtlas.Controllers
                         mylist.Add(dico);
                     }
                 }
+                ViewBag.Membre = user.Nom + " " + user.Prenom;
                 ViewBag.ListPub=mylist;
                 return View();
                     
