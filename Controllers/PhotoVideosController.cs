@@ -85,12 +85,13 @@ namespace NetAtlas.Controllers
 
                     var fileName = Guid.NewGuid().ToString()+'_' + Path.GetFileName(file.FileName);
                     var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot","images", fileName);
-
+                    var truePath = "/images/" + fileName;
+                        
                     PhotoVideo photo = new PhotoVideo()
                     {
                         IdPublication = p.Id,
                         nomRessource = nomRessource,
-                        Chemin = filePath,
+                        Chemin = truePath,
                         TypeMedia = 1,
                         TailleEnMo = file.Length/1000000
                     };
@@ -114,12 +115,13 @@ namespace NetAtlas.Controllers
 
                     var fileName = Guid.NewGuid().ToString() + '_' + Path.GetFileName(file.FileName);
                     var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/videos", fileName);
+                    var truePath = "/videos/" + fileName;
 
                     PhotoVideo photo = new PhotoVideo()
                     {
                         IdPublication = p.Id,
                         nomRessource = nomRessource,
-                        Chemin = filePath,
+                        Chemin = truePath,
                         TypeMedia = 2,
                         TailleEnMo = file.Length/1000000
                     };

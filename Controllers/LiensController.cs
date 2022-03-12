@@ -91,7 +91,7 @@ namespace NetAtlas.Controllers
             ViewBag.Membre = user.Nom + " " + user.Prenom;
             _context.Lien.Add(Lien);
             await _context.SaveChangesAsync();
-            return RedirectToAction("Index");
+            return RedirectToAction("MesPub","Membre");
            
         }
 
@@ -108,7 +108,6 @@ namespace NetAtlas.Controllers
             {
                 return NotFound();
             }
-            ViewData["IdPublication"] = new SelectList(_context.Publication, "Id", "Id", lien.IdPublication);
             return View(lien);
         }
 

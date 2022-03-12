@@ -7,8 +7,27 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/NetAtlas.styles.css" asp-append-version="true" />
+    <!-- Favicons -->
+    <link href="~/assets/img/favicon.png" rel="icon">
+    <link href="~/assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Roboto:300,300i,400,400i,500,500i,700,700i&display=swap" rel="stylesheet">
+
+    <!-- Vendor CSS Files -->
+    <link href="~/assets/vendor/animate.css/animate.min.css" rel="stylesheet">
+    <link href="~/assets/vendor/aos/aos.css" rel="stylesheet">
+    <link href="~/assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="~/assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+    <link href="~/assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+    <link href="~/assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+    <link href="~/assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+
+    <!-- Template Main CSS File -->
+    <link href="~/assets/css/style.css" rel="stylesheet">
 </head>
 <body>
+<<<<<<< HEAD
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container-fluid">
@@ -38,8 +57,32 @@
     </header>
     <div class="">
         <main role="main" class="">
+=======
+    <header id="header" class="fixed-top d-flex align-items-center ">
+    <div class="container d-flex justify-content-between align-items-center">
+
+      <div class="logo">
+        <h1 class="text-light"><a asp-controller="Home" asp-action="Index"><span>NETATLAS</span></a></h1>
+        <!-- Uncomment below if you prefer to use an image logo -->
+        <!-- <a href="index.html"><img src="assets/img/logo.png" alt="" class="img-fluid"></a>-->
+      </div>
+
+      <nav id="navbar" class="navbar">
+        <ul>
+          <li><a class="active" asp-controller="Home" asp-action="Index">Home</a></li>
+          <li><a asp-controller="Membre" asp-action="Login">Se connecter </a></li>
+          <li><a asp-controller="Registers" asp-action="Create">S'incrire</a></li>
+          <!--<li><a href="blog.html">Blog</a></li>-->
+          
+        </ul>
+      </nav><!-- .navbar -->
+
+    </div>
+  </header><!-- End Header -->
+
+        <main role="main" class="pb-3">
+>>>>>>> 79ca1a9619af0d1ce057b2740e5978afd13d26de
             @RenderBody()
-        </main>
     </div>
 
     <footer class="border-top footer text-muted">
@@ -49,8 +92,8 @@
     </footer>
 
     <style>
-        
-*
+   /*     
+
 {
     font-family: Arial, Helvetica,sans-serif;
     margin: 0px;
@@ -105,11 +148,24 @@ button a:hover
     background: var(--main-color);
     color: white !important;
    
-}
+}*/
     </style>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+
+    <!-- Vendor JS Files -->
+  <script src="~/assets/vendor/purecounter/purecounter.js"></script>
+  <script src="~/assets/vendor/aos/aos.js"></script>
+  <script src="~/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="~/assets/vendor/glightbox/js/glightbox.min.js"></script>
+  <script src="~/assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
+  <script src="~/assets/vendor/swiper/swiper-bundle.min.js"></script>
+  <script src="~/assets/vendor/waypoints/noframework.waypoints.js"></script>
+  <script src="~/assets/vendor/php-email-form/validate.js"></script>
+
+  <!-- Template Main JS File -->
+  <script src="~/assets/js/main.js"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

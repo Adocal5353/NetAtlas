@@ -149,9 +149,9 @@ namespace NetAtlas.Controllers
 
 
          public async Task<IActionResult> MembresAverti()
-        {
+         {
             return View(await BaseDeDonnee.Membre.Where(m=>m.NbrAvertissement>=3).ToListAsync());
-        }
+         }
         public async Task<IActionResult> SuppMembre(int id)
         {
             var menber = await BaseDeDonnee.Membre.FindAsync(id);
@@ -214,6 +214,111 @@ namespace NetAtlas.Controllers
             BaseDeDonnee.Update(menber);
             await BaseDeDonnee.SaveChangesAsync();
             return View(menber);
+        }
+
+
+        public async Task<IActionResult> Liste()
+        {
+            return View(await BaseDeDonnee.Membre.ToListAsync());
+        }
+
+        public async Task<IActionResult> SupPub()
+        {
+            
+
+                var q1 = await BaseDeDonnee.Publication.ToListAsync();
+                var mylist = new List<Dictionary<string, object>>();
+
+                foreach (var item in q1)
+                {
+                    if (item.etat == true)
+                    {
+                        var dico = new Dictionary<string, object>();
+                        var res = await BaseDeDonnee.Lien.AnyAsync(r => r.IdPublication == item.Id);
+                        var res2 = await BaseDeDonnee.Message.AnyAsync(r => r.IdPublication == item.Id);
+                        var res3 = await BaseDeDonnee.PhotoVideo.AnyAsync(r => r.IdPublication == item.Id);
+                        if (res is true)
+                        {
+                            dico.Add("publication", item);
+
+                            dico.Add("ressource", await BaseDeDonnee.Lien.FirstAsync(r => r.IdPublication == item.Id));
+                        }
+                        else if (res2 is true)
+                        {
+                            dico.Add("publication", item);
+
+                            dico.Add("ressource", await BaseDeDonnee.Message.FirstAsync(r => r.IdPublication == item.Id));
+                        }
+                        else if (res3 is true)
+                        {
+                            dico.Add("publication", item);
+
+                            dico.Add("ressource", await BaseDeDonnee.PhotoVideo.FirstAsync(r => r.IdPublication == item.Id));
+                        }
+
+                        if (res == true || res2 == true || res3 == true)
+                            mylist.Add(dico);
+                    }
+                }
+                ViewBag.check = false;
+                ViewBag.ListPub = mylist;
+                return View();
+             
+           
+        }
+
+
+        [HttpPost, ActionName("SupPub")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteConfirmed(int id)
+        {
+            if (id == null)
+                return NotFound();
+            var pu = await BaseDeDonnee.Publication.FindAsync(id);
+            ViewBag.check = true;
+            if (pu == null)
+                return NotFound();
+            BaseDeDonnee.Publication.Remove(pu);
+            await BaseDeDonnee.SaveChangesAsync();
+
+
+            var q1 = await BaseDeDonnee.Publication.ToListAsync();
+            var mylist = new List<Dictionary<string, object>>();
+
+            foreach (var item in q1)
+            {
+                if (item.etat == true)
+                {
+                    var dico = new Dictionary<string, object>();
+                    var res = await BaseDeDonnee.Lien.AnyAsync(r => r.IdPublication == item.Id);
+                    var res2 = await BaseDeDonnee.Message.AnyAsync(r => r.IdPublication == item.Id);
+                    var res3 = await BaseDeDonnee.PhotoVideo.AnyAsync(r => r.IdPublication == item.Id);
+                    if (res is true)
+                    {
+                        dico.Add("publication", item);
+
+                        dico.Add("ressource", await BaseDeDonnee.Lien.FirstAsync(r => r.IdPublication == item.Id));
+                    }
+                    else if (res2 is true)
+                    {
+                        dico.Add("publication", item);
+
+                        dico.Add("ressource", await BaseDeDonnee.Message.FirstAsync(r => r.IdPublication == item.Id));
+                    }
+                    else if (res3 is true)
+                    {
+                        dico.Add("publication", item);
+
+                        dico.Add("ressource", await BaseDeDonnee.PhotoVideo.FirstAsync(r => r.IdPublication == item.Id));
+                    }
+
+                    if (res == true || res2 == true || res3 == true)
+                        mylist.Add(dico);
+                }
+            }
+            ViewBag.check = false;
+            ViewBag.ListPub = mylist;
+            return View();
         }
     }
 

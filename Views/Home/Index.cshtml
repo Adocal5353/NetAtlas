@@ -2,7 +2,42 @@
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+<!-- ======= Hero Section ======= -->
+  <section id="hero" class="d-flex justify-cntent-center align-items-center">
+    <div id="heroCarousel" class="container carousel carousel-fade" data-bs-ride="carousel" data-bs-interval="5000">
+
+      <!-- Slide 1 -->
+      <div class="carousel-item active">
+        <div class="carousel-container">
+          <h2 class="animate__animated animate__fadeInDown">Bienvenue sur <span>NETATLAS</span></h2>
+          <p class="animate__animated animate__fadeInUp">Une application qui vous connecte au monde entier.</p>
+        </div>
+      </div>
+
+      <!-- Slide 2 -->
+      <div class="carousel-item">
+        <div class="carousel-container">
+          <h2 class="animate__animated animate__fadeInDown">CREEZ UN COMPTE...FAITES VOUS DES AMIS</h2>
+          <p class="animate__animated animate__fadeInUp">Il n'y a rien de plus facile que de créer un compte sur NETATLAS!</p>
+          <a asp-controller="Registers" asp-action="Create" class="btn-get-started animate__animated animate__fadeInUp">Créez votre compte</a>
+        </div>
+      </div>
+
+      <!-- Slide 3 -->
+      <div class="carousel-item">
+        <div class="carousel-container">
+          <h2 class="animate__animated animate__fadeInDown">PARTAGER VOS ENVIES...</h2>
+          <p class="animate__animated animate__fadeInUp">NETATLAS vous donne la liberté de vous exprimer et de partager tout ce dont vous avez envies. Vous pouvez egalemennt voir les publications de vos amis à travers le monde!</p>
+        </div>
+      </div>
+
+      <a class="carousel-control-prev" href="#heroCarousel" role="button" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon bx bx-chevron-left" aria-hidden="true"></span>
+      </a>
+
+      <a class="carousel-control-next" href="#heroCarousel" role="button" data-bs-slide="next">
+        <span class="carousel-control-next-icon bx bx-chevron-right" aria-hidden="true"></span>
+      </a>
+
+    </div>
+  </section><!-- End Hero -->

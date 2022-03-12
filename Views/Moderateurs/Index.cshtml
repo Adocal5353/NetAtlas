@@ -13,29 +13,31 @@
         {
             if(item["ressource"] is Lien)
             {
-                <div>
+                <div class="container col-6 bg-light">
                     <small>lien posté le @item["publication"].DatePublication</small>
                     <h3>@item["ressource"].nomRessource</h3>
                     <a href='@item["ressource"]'>@item["ressource"].Url</a>
-                </div>
-                <p>
-                    <a asp-action="Avertir" asp-route-id='@item["ressource"].Id'>
+                    <p>
+                        <a asp-controller="Moderateurs" asp-action="Avertir" asp-route-id='@item["ressource"].Id'>
                         <input type="button" class="btn" value="Avertir"/>
                     </a> 
-                </p>
+                    </p>
+                </div>
+                
             }
             if(item["ressource"] is Message)
             {
-                <div>
+                <div class="container col-6 bg-light">
                     <small>Message posté le @item["publication"].DatePublication</small>
                     <h3>@item["ressource"].nomRessource</h3>
                     <p>@item["ressource"].contenu</p>
-                </div>
-                <p>
+                    <p>
                     <a asp-controller="Moderateurs" asp-action="Avertir" asp-route-id='@item["ressource"].Id'>
                         <input type="button" class="btn" value="Avertir"/>
                     </a> 
-                </p>
+                </p> 
+                </div>
+                
             }
 
             if(item["ressource"] is PhotoVideo && item["ressource"].TypeMedia==1)
@@ -44,6 +46,24 @@
                     <small>Image posté le @item["publication"].DatePublication</small>
                     <h3>@item["ressource"].nomRessource</h3>
                     <img src=@item["ressource"].Chemin alt='yfyu'/>
+                    <p>
+                        <a asp-controller="Moderateurs" asp-action="Avertir" asp-route-id='@item["ressource"].Id'>
+                            <input type="button" class="btn" value="Avertir"/>
+                        </a> 
+                    </p>
+                </div>
+            }
+            else if(item["ressource"] is PhotoVideo && item["ressource"].TypeMedia==2)
+            {
+                <div class="container col-6 bg-light">
+                    <small><b>@item["publication"].Menber.Nom @item["publication"].Menber.Prenom</b> a posté une vidéo @item["publication"].DatePublication</small>
+                    <h3>@item["ressource"].nomRessource</h3>
+          
+                    <iframe src='@item["ressource"].Chemin'> </iframe>
+
+                    @*<video width="320" height="240" controls>
+                      <source src='@item["ressource"].Chemin' type=video/mp4>
+                    </video>*@
                 </div>
             }
         }

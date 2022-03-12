@@ -1,0 +1,98 @@
+﻿@model IEnumerable<NetAtlas.Models.Publication>
+
+@{
+    Layout = "_LayoutAdmin";
+}
+
+<div class = "container">
+
+    @if(ViewBag.ListPub!=null)
+    {
+      @if (ViewBag.check){
+            <div class="alert alert-success alert-dismissible col-3" role="alert" style="margin-right:0px;margin-top:0px">
+              <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span></button>
+              La publication a bien été suprimé
+            </div>
+        }
+   
+        @foreach (var item in ViewBag.ListPub)
+        {
+            if(item["ressource"] is Lien)
+            {
+                <div class="container col-6 bg-light">
+                    <small>lien posté le @item["publication"].DatePublication</small>
+                    <h3>@item["ressource"].nomRessource</h3>
+                    <a href='@item["ressource"]'>@item["ressource"].Url</a>
+                
+                    <p>
+                        <form asp-action="SupPub" asp-controller="Admin">
+                            <input  type="hidden" value="@item["publication"].Id" name="id">
+                            <input type="submit" value="Supprimer" class="btn btn-danger" />
+                       
+                        </form> 
+                    </p>
+                </div>
+            }
+            else if(item["ressource"] is Message)
+            {
+                <div class="container col-6 bg-light">
+                    <small>Message posté le @item["publication"].DatePublication</small>
+                    <h3>@item["ressource"].nomRessource</h3>
+                    <p>@item["ressource"].contenu</p>
+                
+                    <p>
+                        <form asp-action="SupPub" asp-controller="Admin">
+                            <input  type="hidden" value="@item["publication"].Id" name="id">
+                            <input type="submit" value="Supprimer" class="btn btn-danger" />
+                       
+                        </form> 
+                    </p>
+                </div>
+            }
+
+            else if(item["ressource"] is PhotoVideo && item["ressource"].TypeMedia==1)
+            {
+                <div class="container col-6 bg-light">
+                    <small>Image posté le @item["publication"].DatePublication</small>
+                    <h3>@item["ressource"].nomRessource</h3>
+                    <img src=@item["ressource"].Chemin/>
+                
+                    <p>
+                        <form asp-action="SupPub" asp-controller="Admin">
+                            <input  type="hidden" value="@item["publication"].Id" name="id">
+                            <input type="submit" value="Supprimer" class="btn btn-danger" />
+                       
+                        </form> 
+                    </p>
+                </div>
+            }
+
+            else if(item["ressource"] is PhotoVideo && item["ressource"].TypeMedia==2)
+            {
+                <div class="container col-6 bg-light">
+                    <small>Vidéo posté le @item["publication"].DatePublication</small>
+                    <h3>@item["ressource"].nomRessource</h3>
+          
+                    @*<iframe src='@item["ressource"].Chemin'> </iframe>*@
+
+                    <video width="320" height="240" controls>
+                      <source src='@item["ressource"].Chemin' type=video/mp4>
+                    </video>
+                
+                    <p>
+                        <form asp-action="SupPub" asp-controller="Admin">
+                            <input  type="hidden" value="@item["publication"].Id" name="id">
+                            <input type="submit" value="Supprimer" class="btn btn-danger" />
+                       
+                        </form> 
+                    </p>
+                </div>
+            }
+        }
+    }
+    else
+    {
+        <h3>Aucune publication présente</h3>
+    }
+</div>

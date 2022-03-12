@@ -7,33 +7,57 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/NetAtlas.styles.css" asp-append-version="true" />
+    <!-- Favicons -->
+    <link href="~/assets/img/favicon.png" rel="icon">
+    <link href="~/assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Roboto:300,300i,400,400i,500,500i,700,700i&display=swap" rel="stylesheet">
+
+    <!-- Vendor CSS Files -->
+    <link href="~/assets/vendor/animate.css/animate.min.css" rel="stylesheet">
+    <link href="~/assets/vendor/aos/aos.css" rel="stylesheet">
+    <link href="~/assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="~/assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+    <link href="~/assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+    <link href="~/assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+    <link href="~/assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+
+    <!-- Template Main CSS File -->
+    <link href="~/assets/css/style.css" rel="stylesheet">
 </head>
 <body>
-    <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container-fluid">
-                <a class="navbar-brand fw-bold" asp-area="" asp-controller="Home" asp-action="Index">NetAtlas</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="Index">Consulter les demandes</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="MembresAverti">Supprimer membres</a>
-                        </li>
-                        
-                    </ul>
-                </div>
-            </div>
-        </nav>
-    </header>
-    <div class="container">
+    <header id="header" class="fixed-top d-flex align-items-center ">
+    <div class="container d-flex justify-content-between align-items-center">
+
+      <div class="logo">
+        <h1 class="text-light"><a asp-action="Index" asp-controller="Home"><span>NETATLAS</span></a></h1>
+        <!-- Uncomment below if you prefer to use an image logo -->
+        <!-- <a href="index.html"><img src="assets/img/logo.png" alt="" class="img-fluid"></a>-->
+      </div>
+
+      <nav id="navbar" class="navbar">
+        <ul>
+          @*<li><a class="active"  >Acceuil</a></li>
+          <li><a href="about.html">About</a></li>*@
+          <li><a>Bonjour Admin</a></li>
+          <li><a asp-controller="Admin" asp-action="SupPub">Voir les publications avertis</a></li>
+          <li><a asp-controller="Admin" asp-action="MembresAverti">Voir les membres avertis</a></li>
+          <li><a asp-controller="Admin" asp-action="Liste">Voir tous les membres</a></li>
+          <li><a asp-controller="Admin" asp-action="Index">Voir les inscriptions en attente</a></li>
+
+          <li><a asp-controller="Membre" asp-action="Deconnexion">Se deconnecter</a></li>
+        </ul>
+        <i class="bi bi-list mobile-nav-toggle"></i>
+      </nav><!-- .navbar -->
+
+    </div>
+  </header><!-- End Header -->
+    <div class="container page">
         <main role="main" class="pb-3">
+            <div class="mt-5">
             @RenderBody()
+            </div>
         </main>
     </div>
 
@@ -43,8 +67,8 @@
         </div>
     </footer>
 
-     <style>
-        
+    <style>
+   /**     
 *
 {
     font-family: Arial, Helvetica,sans-serif;
@@ -53,7 +77,11 @@
     box-sizing: border-box;
 }
 
-
+.page
+{
+    background:;
+    height:100vh;
+}
 
 
 
@@ -96,11 +124,24 @@ button a:hover
     background: var(--main-color);
     color: white !important;
    
-}
+}*/
     </style>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+
+    <!-- Vendor JS Files -->
+  <script src="~/assets/vendor/purecounter/purecounter.js"></script>
+  <script src="~/assets/vendor/aos/aos.js"></script>
+  <script src="~/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="~/assets/vendor/glightbox/js/glightbox.min.js"></script>
+  <script src="~/assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
+  <script src="~/assets/vendor/swiper/swiper-bundle.min.js"></script>
+  <script src="~/assets/vendor/waypoints/noframework.waypoints.js"></script>
+  <script src="~/assets/vendor/php-email-form/validate.js"></script>
+
+  <!-- Template Main JS File -->
+  <script src="~/assets/js/main.js"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
