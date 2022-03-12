@@ -127,7 +127,7 @@ namespace NetAtlas.Controllers
 
 
 
-        private void EnvoiMail(string adr,string body,string subject)
+        public void EnvoiMail(string adr,string body,string subject)
         {
             
 
@@ -206,7 +206,7 @@ namespace NetAtlas.Controllers
                 EnvoiMail(menber.Email, body, "Bannissement de NetAtlas");
                 ViewBag.checkEnvoi = true;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 ViewBag.checkEnvoi = false;
             }
@@ -216,63 +216,32 @@ namespace NetAtlas.Controllers
             return View(menber);
         }
 
-        public async Task<IActionResult> ListMembre()
+
+        public async Task<IActionResult> Liste()
         {
-            var type = HttpContext.Session.GetString("UserType");
-            if (type is not "moderateur" or "admin")
-            {
-                return RedirectToAction("Login", "Membre");
-            }
-            else
-            {
-                var membres = await BaseDeDonnee.Membre.ToListAsync();
-                return View(membres);
-            }
+            return View(await BaseDeDonnee.Membre.ToListAsync());
         }
-        public async Task<IActionResult> ListPublixations()
+
+        public async Task<IActionResult> SupPub()
         {
-            var type = HttpContext.Session.GetString("UserType");
-            if (type is not "admin")
-            {
-                return RedirectToAction("Login", "Membre");
-            }
-            else
-            {
-                //ViewBag.Moderateur = user.Nom + " " + user.Prenom;
-                var q1 = await BaseDeDonnee.Publication.ToListAsync();
-                var mylist = new List<Dictionary<string, object>>();
+            ViewBag.check = false;
+            return View(await BaseDeDonnee.Publication.Where(p=> p.etat==true).ToListAsync());
+        }
 
-                foreach (var item in q1)
-                {
-                    var dico = new Dictionary<string, object>();
-                    var res = await BaseDeDonnee.Lien.AnyAsync(r => r.IdPublication == item.Id && r.etat == false);
-                    var res2 = await BaseDeDonnee.Message.AnyAsync(r => r.IdPublication == item.Id && r.etat == false);
-                    var res3 = await BaseDeDonnee.PhotoVideo.AnyAsync(r => r.IdPublication == item.Id && r.etat == false);
-                    if (res is true)
-                    {
-                        dico.Add("publication", item);
 
-                        dico.Add("ressource", await BaseDeDonnee.Lien.FirstAsync(r => r.IdPublication == item.Id && r.etat == false));
-                    }
-                    else if (res2 is true)
-                    {
-                        dico.Add("publication", item);
-
-                        dico.Add("ressource", await BaseDeDonnee.Message.FirstAsync(r => r.IdPublication == item.Id && r.etat == false));
-                    }
-                    else if (res3 is true)
-                    {
-                        dico.Add("publication", item);
-
-                        dico.Add("ressource", await BaseDeDonnee.PhotoVideo.FirstAsync(r => r.IdPublication == item.Id && r.etat == false));
-                    }
-
-                    if (dico is not null)
-                        mylist.Add(dico);
-                }
-                ViewBag.ListPub = mylist;
-                return View();
-            }
+        [HttpPost, ActionName("SupPub")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteConfirmed(int id)
+        {
+            if (id == null)
+                return NotFound();
+            var pu = await BaseDeDonnee.Publication.FindAsync(id);
+            ViewBag.check = true;
+            if (pu == null)
+                return NotFound();
+            BaseDeDonnee.Publication.Remove(pu);
+            await BaseDeDonnee.SaveChangesAsync();
+            return View(await BaseDeDonnee.Publication.Where(p => p.etat == true).ToListAsync());
         }
     }
 

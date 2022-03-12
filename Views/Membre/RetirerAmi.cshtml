@@ -1,0 +1,54 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@model IEnumerable<NetAtlas.Models.Membre>
+@{
+    Layout = "_LayoutMembre";
+}
+@if (ViewBag.checkEnvoi){
+            <div class="alert alert-success alert-dismissible col-3" role="alert" style="margin-right:0px;margin-top:0px">
+              <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span></button>
+              L' email a bien été envoyé
+            </div>
+        }
+
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Nom)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Prenom)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Email)
+            </th>
+            
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Nom)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Prenom)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Email)
+            </td>
+            
+            <td>
+                <form asp-action="RetirerAmi" asp-controller="Membre">
+                   <input  type="hidden" value="@item.Id" name="id">
+                   <input type="submit" value="Retirer">
+                </form>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
