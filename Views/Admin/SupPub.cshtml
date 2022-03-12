@@ -20,33 +20,35 @@
         {
             if(item["ressource"] is Lien)
             {
-                <div>
+                <div class="container col-6 bg-light">
                     <small>lien posté le @item["publication"].DatePublication</small>
                     <h3>@item["ressource"].nomRessource</h3>
                     <a href='@item["ressource"]'>@item["ressource"].Url</a>
-                </div>
-                <p>
-                    <form asp-action="SupPub" asp-controller="Admin">
-                        <input  type="hidden" value="@item["publication"].Id" name="id">
-                        <input type="submit" value="Supprimer" class="btn btn-danger" />
+                
+                    <p>
+                        <form asp-action="SupPub" asp-controller="Admin">
+                            <input  type="hidden" value="@item["publication"].Id" name="id">
+                            <input type="submit" value="Supprimer" class="btn btn-danger" />
                        
-                    </form> 
-                </p>
+                        </form> 
+                    </p>
+                </div>
             }
             else if(item["ressource"] is Message)
             {
-                <div>
+                <div class="container col-6 bg-light">
                     <small>Message posté le @item["publication"].DatePublication</small>
                     <h3>@item["ressource"].nomRessource</h3>
                     <p>@item["ressource"].contenu</p>
-                </div>
-                <p>
-                    <form asp-action="SupPub" asp-controller="Admin">
-                        <input  type="hidden" value="@item["publication"].Id" name="id">
-                        <input type="submit" value="Supprimer" class="btn btn-danger" />
+                
+                    <p>
+                        <form asp-action="SupPub" asp-controller="Admin">
+                            <input  type="hidden" value="@item["publication"].Id" name="id">
+                            <input type="submit" value="Supprimer" class="btn btn-danger" />
                        
-                    </form> 
-                </p>
+                        </form> 
+                    </p>
+                </div>
             }
 
             else if(item["ressource"] is PhotoVideo && item["ressource"].TypeMedia==1)
@@ -55,14 +57,15 @@
                     <small>Image posté le @item["publication"].DatePublication</small>
                     <h3>@item["ressource"].nomRessource</h3>
                     <img src=@item["ressource"].Chemin/>
-                </div>
-                <p>
-                    <form asp-action="SupPub" asp-controller="Admin">
-                        <input  type="hidden" value="@item["publication"].Id" name="id">
-                        <input type="submit" value="Supprimer" class="btn btn-danger" />
+                
+                    <p>
+                        <form asp-action="SupPub" asp-controller="Admin">
+                            <input  type="hidden" value="@item["publication"].Id" name="id">
+                            <input type="submit" value="Supprimer" class="btn btn-danger" />
                        
-                    </form> 
-                </p>
+                        </form> 
+                    </p>
+                </div>
             }
 
             else if(item["ressource"] is PhotoVideo && item["ressource"].TypeMedia==2)
@@ -76,14 +79,15 @@
                     <video width="320" height="240" controls>
                       <source src='@item["ressource"].Chemin' type=video/mp4>
                     </video>
-                </div>
-                <p>
-                    <form asp-action="SupPub" asp-controller="Admin">
-                        <input  type="hidden" value="@item["publication"].Id" name="id">
-                        <input type="submit" value="Supprimer" class="btn btn-danger" />
+                
+                    <p>
+                        <form asp-action="SupPub" asp-controller="Admin">
+                            <input  type="hidden" value="@item["publication"].Id" name="id">
+                            <input type="submit" value="Supprimer" class="btn btn-danger" />
                        
-                    </form> 
-                </p>
+                        </form> 
+                    </p>
+                </div>
             }
         }
     }

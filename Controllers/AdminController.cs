@@ -224,8 +224,47 @@ namespace NetAtlas.Controllers
 
         public async Task<IActionResult> SupPub()
         {
-            ViewBag.check = false;
-            return View(await BaseDeDonnee.Publication.Where(p=> p.etat==true).ToListAsync());
+            
+
+                var q1 = await BaseDeDonnee.Publication.ToListAsync();
+                var mylist = new List<Dictionary<string, object>>();
+
+                foreach (var item in q1)
+                {
+                    if (item.etat == true)
+                    {
+                        var dico = new Dictionary<string, object>();
+                        var res = await BaseDeDonnee.Lien.AnyAsync(r => r.IdPublication == item.Id);
+                        var res2 = await BaseDeDonnee.Message.AnyAsync(r => r.IdPublication == item.Id);
+                        var res3 = await BaseDeDonnee.PhotoVideo.AnyAsync(r => r.IdPublication == item.Id);
+                        if (res is true)
+                        {
+                            dico.Add("publication", item);
+
+                            dico.Add("ressource", await BaseDeDonnee.Lien.FirstAsync(r => r.IdPublication == item.Id));
+                        }
+                        else if (res2 is true)
+                        {
+                            dico.Add("publication", item);
+
+                            dico.Add("ressource", await BaseDeDonnee.Message.FirstAsync(r => r.IdPublication == item.Id));
+                        }
+                        else if (res3 is true)
+                        {
+                            dico.Add("publication", item);
+
+                            dico.Add("ressource", await BaseDeDonnee.PhotoVideo.FirstAsync(r => r.IdPublication == item.Id));
+                        }
+
+                        if (res == true || res2 == true || res3 == true)
+                            mylist.Add(dico);
+                    }
+                }
+                ViewBag.check = false;
+                ViewBag.ListPub = mylist;
+                return View();
+             
+           
         }
 
 
@@ -241,7 +280,45 @@ namespace NetAtlas.Controllers
                 return NotFound();
             BaseDeDonnee.Publication.Remove(pu);
             await BaseDeDonnee.SaveChangesAsync();
-            return View(await BaseDeDonnee.Publication.Where(p => p.etat == true).ToListAsync());
+
+
+            var q1 = await BaseDeDonnee.Publication.ToListAsync();
+            var mylist = new List<Dictionary<string, object>>();
+
+            foreach (var item in q1)
+            {
+                if (item.etat == true)
+                {
+                    var dico = new Dictionary<string, object>();
+                    var res = await BaseDeDonnee.Lien.AnyAsync(r => r.IdPublication == item.Id);
+                    var res2 = await BaseDeDonnee.Message.AnyAsync(r => r.IdPublication == item.Id);
+                    var res3 = await BaseDeDonnee.PhotoVideo.AnyAsync(r => r.IdPublication == item.Id);
+                    if (res is true)
+                    {
+                        dico.Add("publication", item);
+
+                        dico.Add("ressource", await BaseDeDonnee.Lien.FirstAsync(r => r.IdPublication == item.Id));
+                    }
+                    else if (res2 is true)
+                    {
+                        dico.Add("publication", item);
+
+                        dico.Add("ressource", await BaseDeDonnee.Message.FirstAsync(r => r.IdPublication == item.Id));
+                    }
+                    else if (res3 is true)
+                    {
+                        dico.Add("publication", item);
+
+                        dico.Add("ressource", await BaseDeDonnee.PhotoVideo.FirstAsync(r => r.IdPublication == item.Id));
+                    }
+
+                    if (res == true || res2 == true || res3 == true)
+                        mylist.Add(dico);
+                }
+            }
+            ViewBag.check = false;
+            ViewBag.ListPub = mylist;
+            return View();
         }
     }
 
