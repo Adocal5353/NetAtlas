@@ -24,14 +24,15 @@
                     <small> Lien posté le @item["publication"].DatePublication</small>
                     <h3>@item["ressource"].nomRessource</h3>
                     <a href="@item["ressource"].Url">@item["ressource"].Url</a>
-                </div>
-                <p>
+                    <p>
                     <form asp-action="MesPub" asp-controller="Membre">
-                        <input type="hidden" value="@item["publication"].Id"/>
+                        <input  type="hidden" value="@item["publication"].Id" name="id">
                         <input type="submit" value="Supprimer" class="btn btn-danger" />
                        
                     </form> 
                 </p>
+                </div>
+                
             }
             else if(item["ressource"] is Message)
             {
@@ -39,14 +40,15 @@
                     <small>Message posté le @item["publication"].DatePublication</small>
                     <h3>@item["ressource"].nomRessource</h3>
                     <p>@item["ressource"].contenu</p>
-                </div>
-                <p>
+                    <p>
                     <form asp-action="MesPub" asp-controller="Membre">
-                        <input type="hidden" value="@item["publication"].Id"/>
+                        <input  type="hidden" value="@item["publication"].Id" name="id">
                         <input type="submit" value="Supprimer" class="btn btn-danger" />
                        
                     </form> 
                 </p>
+                </div>
+                
             }
 
             else if(item["ressource"] is PhotoVideo && item["ressource"].TypeMedia==1)
@@ -55,14 +57,15 @@
                     <small>Image posté @item["publication"].DatePublication</small>
                     <h3>@item["ressource"].nomRessource</h3>
                     <img src='@item["ressource"].Chemin'/>
-                </div>
-                <p>
-                    <form asp-action="MesPub" asp-controller="Membre">
-                        <input type="hidden" value="@item["publication"].Id"/>
-                        <input type="submit" value="Supprimer" class="btn btn-danger" />
+                    <p>
+                        <form asp-action="MesPub" asp-controller="Membre">
+                            <input  type="hidden" value="@item["publication"].Id" name="id">
+                            <input type="submit" value="Supprimer" class="btn btn-danger" />
                        
-                    </form> 
-                </p>
+                        </form> 
+                    </p>
+                </div>
+                
             }
             else if(item["ressource"] is PhotoVideo && item["ressource"].TypeMedia==2)
             {
@@ -75,14 +78,15 @@
                     <video width="320" height="240" controls>
                       <source src='@item["ressource"].Chemin' type=video/mp4>
                     </video>
-                </div>
-                <p>
+                    <p>
                     <form asp-action="MesPub" asp-controller="Membre">
-                        <input type="hidden" value="@item["publication"].Id"/>
+                        <input  type="hidden" value="@item["publication"].Id" name="id">
                         <input type="submit" value="Supprimer" class="btn btn-danger" />
                        
                     </form> 
                 </p>
+                </div>
+                
             }
         }
     }

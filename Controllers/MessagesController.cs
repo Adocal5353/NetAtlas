@@ -90,7 +90,7 @@ namespace NetAtlas.Controllers
             message.contenu = contenu;
             _context.Message.Add(message);
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction("MesPub", "Membre");
 
         }
 

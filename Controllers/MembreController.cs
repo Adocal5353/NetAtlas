@@ -361,11 +361,82 @@ namespace NetAtlas.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var pub = await bd.Publication.FindAsync(id);
-            ViewBag.check = true;
-            bd.Publication.Remove(pub);
-            await bd.SaveChangesAsync();
-            return View(await bd.Publication.Where(p => p.etat == true).ToListAsync());
+            
+
+                if (id == null)
+                    return NotFound();
+                var pu = await bd.Publication.FindAsync(id);
+                ViewBag.check = true;
+                if (pu == null)
+                    return NotFound();
+                bd.Publication.Remove(pu);
+                await bd.SaveChangesAsync();
+
+
+            var type = HttpContext.Session.GetString("UserType");
+            if (type is not "membre")
+            {
+                return RedirectToAction("Login", "Membre");
+            }
+            else
+            {
+                var user = GetMembre();
+                ViewBag.Membre = user.Nom + " " + user.Prenom;
+
+
+                var q1 = await bd.Publication.Include(p => p.Menber).ToListAsync();
+                var mylist = new List<Dictionary<string, object>>();
+
+                var pub = new List<Publication>();
+                foreach (var item in q1)
+                {
+
+
+                    if (item.Menber.Id == user.Id)
+                    {
+                        pub.Add(item);
+                    }
+
+
+                }
+
+
+
+                foreach (var item in pub)
+                {
+                    if (item.etat == false)
+                    {
+                        var dico = new Dictionary<string, object>();
+                        var res = await bd.Lien.AnyAsync(r => r.IdPublication == item.Id);
+                        var res2 = await bd.Message.AnyAsync(r => r.IdPublication == item.Id);
+                        var res3 = await bd.PhotoVideo.AnyAsync(r => r.IdPublication == item.Id);
+                        if (res is true)
+                        {
+                            dico.Add("publication", item);
+
+                            dico.Add("ressource", await bd.Lien.FirstAsync(r => r.IdPublication == item.Id));
+                        }
+                        else if (res2 is true)
+                        {
+                            dico.Add("publication", item);
+
+                            dico.Add("ressource", await bd.Message.FirstAsync(r => r.IdPublication == item.Id));
+                        }
+                        else if (res3 is true)
+                        {
+                            dico.Add("publication", item);
+
+                            dico.Add("ressource", await bd.PhotoVideo.FirstAsync(r => r.IdPublication == item.Id));
+                        }
+
+                        if (res == true || res2 == true || res3 == true)
+                            mylist.Add(dico);
+                    }
+                }
+                ViewBag.check = true;
+                ViewBag.ListPub = mylist;
+                return View(await bd.Publication.Where(p => p.etat == true).ToListAsync());
+            }
         }
 
     }

@@ -260,5 +260,11 @@ namespace NetAtlas.Controllers
             client.Send(mail);
 
         }
+
+        public async Task<IActionResult> Liste()
+        {
+            return View(await _context.Membre.ToListAsync());
+        }
+
     }
 }

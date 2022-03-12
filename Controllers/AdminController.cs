@@ -233,9 +233,13 @@ namespace NetAtlas.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var pub = await BaseDeDonnee.Publication.FindAsync(id);
+            if (id == null)
+                return NotFound();
+            var pu = await BaseDeDonnee.Publication.FindAsync(id);
             ViewBag.check = true;
-            BaseDeDonnee.Publication.Remove(pub);
+            if (pu == null)
+                return NotFound();
+            BaseDeDonnee.Publication.Remove(pu);
             await BaseDeDonnee.SaveChangesAsync();
             return View(await BaseDeDonnee.Publication.Where(p => p.etat == true).ToListAsync());
         }
