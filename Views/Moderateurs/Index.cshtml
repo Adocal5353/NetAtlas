@@ -13,53 +13,53 @@
         {
             if(item["ressource"] is Lien)
             {
-                <div class="container col-6 bg-light rounded">
+                <div class="container col-6 bg-light justify-content-center rounded-2 p-3">
                     <small>lien posté le @item["publication"].DatePublication</small>
-                    <h3>@item["ressource"].nomRessource</h3>
+                    <h3 class="text-center text-primary">@item["ressource"].nomRessource</h3>
                     <a href='@item["ressource"]'>@item["ressource"].Url</a>
                     <p>
                         <a asp-controller="Moderateurs" asp-action="Avertir" asp-route-id='@item["ressource"].Id'>
                         <input type="button" class="btn btn-primary" value="Avertir"/>
                     </a> 
                     </p>
-                </div>
+                </div><br />
                 
             }
             if(item["ressource"] is Message)
             {
-                <div class="container col-6 bg-light rounded">
+                <div class="container col-6 bg-light justify-content-center rounded-2 p-3">
                     <small>Message posté le @item["publication"].DatePublication</small>
-                    <h3>@item["ressource"].nomRessource</h3>
+                    <h3 class="text-center text-primary">@item["ressource"].nomRessource</h3>
                     <p>@item["ressource"].contenu</p>
                     <p>
                     <a asp-controller="Moderateurs" asp-action="Avertir" asp-route-id='@item["ressource"].Id'>
                         <input type="button" class="btn btn-primary" value="Avertir"/>
                     </a> 
                 </p> 
-                </div>
+                </div><br />
                 
             }
 
             if(item["ressource"] is PhotoVideo && item["ressource"].TypeMedia==1)
             {
-                <div class="container col-6 bg-light rounded">
+                <div class="container col-6 bg-light justify-content-center rounded-2 p-3">
                     <small>Image posté le @item["publication"].DatePublication</small>
-                    <h3>@item["ressource"].nomRessource</h3>
-                    <img src=@item["ressource"].Chemin alt='yfyu'/>
+                    <h3 class="text-center text-primary">@item["ressource"].nomRessource</h3>
+                    <img class="rounded mx-auto d-block" src=@item["ressource"].Chemin alt='yfyu'/><br>
                     <p>
                         <a asp-controller="Moderateurs" asp-action="Avertir" asp-route-id='@item["ressource"].Id'>
                             <input type="button" class="btn btn-primary" value="Avertir"/>
                         </a> 
                     </p>
-                </div>
+                </div><br />
             }
             else if(item["ressource"] is PhotoVideo && item["ressource"].TypeMedia==2)
             {
-                <div class="container col-6 bg-light rounded">
-                    <small><b>@item["publication"].Menber.Nom @item["publication"].Menber.Prenom</b> a posté une vidéo @item["publication"].DatePublication</small>
-                    <h3>@item["ressource"].nomRessource</h3>
+                <div class="container col-6 bg-light justify-content-center rounded-2 p-3">
+                    <small>vidéo posté le @item["publication"].DatePublication</small>
+                    <h3 class="text-center text-primary">@item["ressource"].nomRessource</h3><br>
           
-                    <iframe src='@item["ressource"].Chemin'> </iframe>
+                    <iframe class="rounded mx-auto d-block" src='@item["ressource"].Chemin'> </iframe>
 
                     @*<video width="320" height="240" controls>
                       <source src='@item["ressource"].Chemin' type=video/mp4>
@@ -69,7 +69,7 @@
                             <input type="button" class="btn btn-primary" value="Avertir"/>
                         </a> 
                     </p>
-                </div>
+                </div><br />
             }
         }
     }

@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace NetAtlas.Models
 {
@@ -10,6 +11,8 @@ namespace NetAtlas.Models
 
         [ForeignKey("Publication")]
         public int IdPublication { get; set; }
+
+        [DisplayName("Titre de la publication")]
         public string nomRessource { get; set; }
 
         //if it is a message type=0, a link type = 1, an image type=2 and a video type=3

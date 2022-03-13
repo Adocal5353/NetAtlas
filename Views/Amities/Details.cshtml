@@ -1,7 +1,7 @@
 ﻿@model NetAtlas.Models.Amitie
 
 @{
-    ViewData["title"] = "Confirmer acceptatioon";
+    ViewData["title"] = "Confirmer acceptation";
 }
 
 
@@ -12,7 +12,7 @@
     <dl class="row">
        
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Receiver)
+            Utilisateur
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.Receiver.Email)
@@ -23,7 +23,7 @@
 <div>
     <form asp-action="Edit">
             <input type="hidden" asp-for="Id" />
-            <input type="submit" value="accepter l'invitation" />
+            <input type="submit" class="btn btn-outline-success" value="accepter l'invitation" />
     </form>
 
 </div>

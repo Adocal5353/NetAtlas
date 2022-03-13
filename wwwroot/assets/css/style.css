@@ -468,8 +468,8 @@ h1, h2, h3, h4, h5, h6, .font-primary {
 # Sections General
 --------------------------------------------------------------*/
 section {
-  padding: 60px 0;
-}
+/*  padding: 60px 0;
+*/}
 
 .section-bg {
   background-color: #f3f8fa;

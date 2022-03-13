@@ -13,18 +13,18 @@
         {
             if(item["ressource"] is Lien)
             {
-                <div class="container col-6 bg-light">
-                    <small> <b>@item["publication"].Menber.Nom @item["publication"].Menber.Prenom</b> a posté un lien le @item["publication"].DatePublication</small>
-                    <h3>@item["ressource"].nomRessource</h3>
-                    <a href="@item["ressource"].Url">@item["ressource"].Url</a>
+                <div class="container col-6 bg-light justify-content-center rounded-2 p-3">
+                    <small> <b class="text-info">@item["publication"].Menber.Nom @item["publication"].Menber.Prenom</b> a posté un lien le @item["publication"].DatePublication</small>
+                    <h3 class="text-center text-primary">@item["ressource"].nomRessource</h3>
+                    <a href="@item["ressource"].Url" target="_blank">@item["ressource"].Url</a>
                 </div>
                 <br/>
             }
             else if(item["ressource"] is Message)
             {
-                <div class="container col-6 bg-light">
-                    <small><b>@item["publication"].Menber.Nom @item["publication"].Menber.Prenom</b> a posté un message @item["publication"].DatePublication</small>
-                    <h3>@item["ressource"].nomRessource</h3>
+                <div class="container col-6 bg-light justify-content-center rounded-2 p-3">
+                    <small><b class="text-info">@item["publication"].Menber.Nom @item["publication"].Menber.Prenom</b> a posté un message @item["publication"].DatePublication</small>
+                    <h3 class="text-center text-primary">@item["ressource"].nomRessource</h3>
                     <p>@item["ressource"].contenu</p>
                 </div>
                 <br/>
@@ -32,24 +32,24 @@
 
             else if(item["ressource"] is PhotoVideo && item["ressource"].TypeMedia==1)
             {
-                <div class="container col-6 bg-light">
-                    <small><b>@item["publication"].Menber.Nom @item["publication"].Menber.Prenom</b> a posté un message @item["publication"].DatePublication</small>
-                    <h3>@item["ressource"].nomRessource</h3>
-                    <img src='@item["ressource"].Chemin'/>
+                <div class="container col-6 bg-light justify-content-center rounded-2 p-3">
+                    <small><b class="text-info">@item["publication"].Menber.Nom @item["publication"].Menber.Prenom</b> a posté un message @item["publication"].DatePublication</small>
+                    <h3 class="text-center text-primary">@item["ressource"].nomRessource</h3>
+                    <img class="rounded mx-auto d-block" src='@item["ressource"].Chemin'/>
                 </div>
                 <br/>
             }
             else if(item["ressource"] is PhotoVideo && item["ressource"].TypeMedia==2)
             {
-                <div class="container col-6 bg-light">
-                    <small><b>@item["publication"].Menber.Nom @item["publication"].Menber.Prenom</b> a posté une vidéo @item["publication"].DatePublication</small>
-                    <h3>@item["ressource"].nomRessource</h3>
+                <div class="container col-6 bg-light justify-content-center rounded-2 p-3" >
+                    <small><b class="text-info">@item["publication"].Menber.Nom @item["publication"].Menber.Prenom</b> a posté une vidéo @item["publication"].DatePublication</small>
+                    <h3 class="text-center text-primary">@item["ressource"].nomRessource</h3>
           
-                    @*<iframe src='@item["ressource"].Chemin'> </iframe>*@
+                    <iframe class="rounded mx-auto d-block" src='@item["ressource"].Chemin'> </iframe>
 
-                    <video width="320" height="240" controls>
+                    @*<video width="320" height="240" controls>
                       <source src='@item["ressource"].Chemin' type=video/mp4>
-                    </video>
+                    </video>*@
                 </div>
                 <br/>
             }

@@ -10,7 +10,7 @@
         <tr>
            
             <th colspan=2>
-                @Html.DisplayNameFor(model => model.Sender)
+                Utilisateur
             </th>
             
             <th></th>
@@ -29,8 +29,8 @@
             </td>
            
             <td>
-                <a asp-action="Details" asp-route-id="@item.Id">Accepter l'invitation</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Refuser l'invitation</a>
+                <a class="btn btn-outline-info" asp-action="Details" asp-route-id="@item.Id">Accepter l'invitation</a> |
+                <a class="btn btn-outline-danger" asp-action="Delete" asp-route-id="@item.Id">Refuser l'invitation</a>
 
             </td>
         </tr>

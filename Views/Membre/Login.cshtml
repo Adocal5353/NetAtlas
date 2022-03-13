@@ -14,7 +14,7 @@
         <img src="~/images/istockphoto-155372496-1024x1024.jpg"/>
     </div>
     <div class="contentBox">
-        <p class="text-danger">@ViewBag.NoneValid</p>
+        
         <div class ="formbox">
             <h2>Connectez-vous</h2>
             <form asp-action="Login">
@@ -26,6 +26,7 @@
                     <span>Password</span>
                     <input asp-for="Password" />
                 </div>
+                <p class="text-danger">@ViewBag.NoneValid</p>
                 <div class="inputbox">
                 <input type="submit" value="Se connecter" class="btn btn-primary" />
                 </div>
